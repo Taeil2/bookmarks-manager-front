@@ -1,0 +1,55 @@
+.bookmarks {
+  position: relative;
+}
+
+.muuri-item {
+  display: block;
+  position: absolute;
+  z-index: 1;
+}
+.muuri-item-dragging {
+  z-index: 3;
+}
+.muuri-item-releasing {
+  z-index: 2;
+}
+.muuri-item-hidden {
+  z-index: 0;
+}
+
+.bookmark {
+  // drag and drop styles
+  width: 80px;
+  height: 100px;
+  margin: 10px 20px;
+  // other styles
+  cursor: pointer;
+  .bookmark-image {
+    background: #ccc;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  p {
+    margin-top: 0.3em;
+    text-align: center;
+  }
+  &.add {
+    .bookmark-image {
+      background: #fff;
+      border: 1px solid #ccc;
+      font-size: 24px;
+      color: #9E9E9E;
+    }
+    color: #333;
+  }
+}
+.group {
+  width: 360px;
+  .bookmark {
+    display: inline-block;
+  }
+}

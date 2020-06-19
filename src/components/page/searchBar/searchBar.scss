@@ -1,0 +1,22 @@
+.search-form {
+  position: relative;
+  .google-search {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 50px;
+    font-size: 18px;
+  }
+  button {
+    position: absolute;
+    top: 0;
+    right: 50px;
+    background: none;
+  }
+
+  @media (min-width: 800px) {
+    .google-search {
+      width: calc(100% - 100px);
+    }
+  }
+}

@@ -1,0 +1,66 @@
+/*------------------
+  Login
+------------------*/
+.login-page {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  .features {
+    background: #ddd;
+    height: 150px;
+    max-width: 300px;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    h2 {
+      align-self: flex-end;
+      max-width: 350px;
+      text-align: center;
+    }
+  }
+  .login-box {
+    max-width: 400px;
+    margin: 0 auto;
+    border: 1px solid black;
+    padding: 20px;
+    label, input {
+      display: block;
+    }
+    input {
+      width: 100%;
+    }
+    .forgot-password-button {
+      display: inline-block;
+      vertical-align: top;
+      margin-top: -10px;
+      margin-bottom: 1em;
+    }
+    .btn {
+      display: block;
+      text-align: center;
+    }
+  }
+}
+
+@media (min-width: 800px) {
+  .login-page {
+    .wrapper {
+      display: flex;
+      flex-direction: row;
+      section {
+        flex: 50%;
+      }
+    }
+    .features {
+      height: 500px;
+    }
+    .login {
+      display: flex;
+    }
+    .login-box {
+      align-self: center;
+    }
+  }
+}

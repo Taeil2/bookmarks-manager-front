@@ -1,0 +1,15 @@
+.page {
+  .wrapper {
+    min-width: 645px;
+    max-width: 645px;
+    padding-top: 50px;
+  }
+}
+
+@media (min-width: 800px) {
+  .page {
+    .wrapper {
+      padding-top: 150px;
+    }
+  }
+}
