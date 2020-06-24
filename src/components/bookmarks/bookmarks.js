@@ -1,22 +1,34 @@
 import React from 'react';
 import './bookmarks.scss';
 import Muuri from 'muuri';
+import AppContext from '../../appContext';
 
 import Bookmark from './bookmark/bookmark';
 
 export default class Bookmarks extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  static contextType = AppContext;
 
   componentDidMount() {
-    var grid = new Muuri('.bookmarks', {
-      dragEnabled: true
-    });
+    let parentName = this.props.parent;
+    let muuriClass = '.' + parentName;
+    let muuriGrids = {};
 
-    // document.getElementsByClassName('add')[0].classList.remove('muuri-item');
+    muuriGrids[parentName] = new Muuri(muuriClass, {
+      dragEnabled: true,
+      dragContainer: document.body,
+      dragSort: function() {
+        return [muuriGrids['page-bookmarks'], muuriGrids['drawer']]
+      }
+    });
   }
 
   render() {
     return (
-      <section className="bookmarks">
+      <section className={'bookmarks ' + this.props.parent}>
         <Bookmark />
         <Bookmark />
         <div className="group">
@@ -32,10 +44,10 @@ export default class Bookmarks extends React.Component {
         <Bookmark />
         <Bookmark />
         <Bookmark />
-        <a href="./add" className="bookmark add">
-          <div className="bookmark-image"><i className="fas fa-plus"></i></div>
+        <button className="bookmark add" onClick={(e) => this.context.showModal('AddForm')}>
+          <div className="bookmark-image icon-btn"><i className="fas fa-plus"></i></div>
           <p>Add Bookmark</p>
-        </a>
+        </button>
       </section>
     );
   }

@@ -2,10 +2,17 @@ $dark-gray: #333;
 $gray: #BDBDBD;
 $purple: #7E57C2;
 
-#root { // for the modal
+.modal-container { // for the modal
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+
   display: flex;
-  min-height: 100vh;
   justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
 }
 .modal {
   position: absolute;
@@ -16,19 +23,5 @@ $purple: #7E57C2;
   border: 1px solid $dark-gray;
   background: #fff;
   align-self: center;
-  box-shadow: 0px 2px 5px $gray;
-  z-index: 10;
-}
-
-.modal {
   border: 1px solid black;
-  input {
-    width: 100%;
-  }
-  .btn-group {
-    margin-bottom: 15px;
-  }
-  .secondary {
-    margin-left: 10px;
-  }
 }

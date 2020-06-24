@@ -1,0 +1,26 @@
+$sidebarWidth: 350px;
+
+.sidebar-container {
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  right: 0;
+  width: $sidebarWidth;
+  height: 100%;
+  padding: 20px;
+  border-left: 1px solid black;
+  background: #fff;
+  display: flex;
+
+  transition: right 250ms ease-out;
+  &.show-false {
+    right: -$sidebarWidth;
+  }
+  &.show-true {
+    right: 0;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+}

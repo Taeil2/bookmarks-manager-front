@@ -1,18 +1,16 @@
 import React from 'react';
 import './page.scss';
-import BookmarksContext from '../../context';
+import AppContext from '../../appContext';
 
 import SearchBar from './searchBar/searchBar';
 import PageNavigation from './pageNavigation/pageNavigation';
 import Bookmarks from '../bookmarks/bookmarks';
+import Sidebar from '../sidebar/sidebar';
 
 export default class Page extends React.Component {
-
-  static contextType = BookmarksContext;
+  static contextType = AppContext;
 
   render() {
-    console.log(this.context);
-
     return (
       <main className="page">
         <div className="wrapper">
@@ -20,8 +18,10 @@ export default class Page extends React.Component {
           <div className="page-buttons">
             <PageNavigation />
           </div>
-          <Bookmarks />
+          <Bookmarks parent="page-bookmarks" />
         </div>
+        <Sidebar />
+
       </main>
     );
   }

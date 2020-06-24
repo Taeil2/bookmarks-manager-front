@@ -1,0 +1,24 @@
+.sidebar {
+  // containers
+  .ql-toolbar.ql-snow {
+    padding: 0;
+    border: 0;
+  }
+  .ql-editor {
+    padding: 0;
+    border: 0;
+  }
+  .ql-container.ql-snow {
+    border: 0;
+  }
+
+  // editor
+  .ql-editor {
+    font-size: 16px;
+    margin-top: 0.5em;
+  }
+  .ql-editor.ql-blank::before {
+    left: 0;
+    right: 0;
+  }
+}

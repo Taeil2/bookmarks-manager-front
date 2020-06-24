@@ -1,0 +1,16 @@
+.buttons-container {
+  display: flex;
+  position: absolute;
+  align-self: center;
+  left: -60px;
+  flex-direction: column;
+  button {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    color: #d0d0d0;
+  }
+  button + button {
+    margin-top: -1px;
+  }
+}

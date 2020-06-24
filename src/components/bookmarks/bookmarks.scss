@@ -38,13 +38,13 @@
     text-align: center;
   }
   &.add {
-    .bookmark-image {
-      background: #fff;
-      border: 1px solid #ccc;
-      font-size: 24px;
-      color: #9E9E9E;
-    }
     color: #333;
+    background: none;
+    border: 0;
+    padding: 0;
+    .bookmark-image {
+      background: none;
+    }
   }
 }
 .group {
