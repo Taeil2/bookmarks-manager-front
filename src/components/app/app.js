@@ -24,7 +24,8 @@ export default class App extends React.Component {
         icon_size: 'medium',
         icon_shape: 'rounded',
         per_row: 6
-      }
+      },
+      note: '',
     };
   }
 
