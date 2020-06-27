@@ -1,4 +1,4 @@
-$sidebarWidth: 350px;
+$sidebarWidth: 375px;
 
 .sidebar-container {
   position: fixed;
@@ -6,21 +6,35 @@ $sidebarWidth: 350px;
   top: 0;
   right: 0;
   width: $sidebarWidth;
-  height: 100%;
-  padding: 20px;
   border-left: 1px solid black;
   background: #fff;
   display: flex;
-
+  height: 100%;
   transition: right 250ms ease-out;
+  // overflow-y: auto;
   &.show-false {
     right: -$sidebarWidth;
   }
   &.show-true {
     right: 0;
   }
+}
 
-  .sidebar {
-    width: 100%;
+.sidebar {
+  width: 100%;
+  padding: 20px;
+  overflow-y: auto;
+  h2 {
+    display: inline-block;
+    i {
+      margin-right: 5px;
+    }
+  }
+  .close-sidebar {
+    float: right;
+    background: none;
+    margin-top: -5px;
+    padding: 8px 12px;
+    border: 0;
   }
 }

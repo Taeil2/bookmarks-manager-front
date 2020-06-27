@@ -1,11 +1,13 @@
 .search-form {
   position: relative;
+  margin-bottom: 40px;
   .google-search {
     display: block;
     width: 100%;
     margin: 0 auto;
-    margin-bottom: 50px;
     font-size: 18px;
+    padding: 10px 10px;
+    border-radius: 7px;
   }
   button {
     position: absolute;
@@ -15,7 +17,7 @@
     border: none;
     border-radius: 0;
     color: black;
-    padding: 8px;
+    padding: 13px 13px;
   }
 
   @media (min-width: 800px) {

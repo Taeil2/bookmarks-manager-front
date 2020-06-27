@@ -1,7 +1,8 @@
-.bookmarks {
-  position: relative;
-}
+@import '../../variables.scss';
 
+/*------------------
+  Muuri Styles
+------------------*/
 .muuri-item {
   display: block;
   position: absolute;
@@ -17,39 +18,243 @@
   z-index: 0;
 }
 
+/*------------------
+  Base Bookmark Styles
+------------------*/
+.bookmarks {
+  position: relative;
+}
 .bookmark {
-  // drag and drop styles
-  width: 80px;
-  height: 100px;
-  margin: 10px 20px;
-  // other styles
+  padding: 10px 0 5px;
   cursor: pointer;
+  position: relative;
   .bookmark-image {
     background: #ccc;
-    width: 60px;
-    height: 60px;
     margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .context-menu-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 14px;
+    padding: 2px 5px;
+    color: $light-gray;
+    opacity: 0;
+    transition: opacity 125ms ease-in;
+  }
+  &:hover .context-menu-icon {
+    opacity: 1;
   }
   p {
-    margin-top: 0.3em;
+    margin-top: 0.5em;
+    margin-bottom: 0;
     text-align: center;
+    line-height: 1.2em;
+    height: 2.4em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   &.add {
     color: #333;
     background: none;
     border: 0;
-    padding: 0;
     .bookmark-image {
       background: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }
-.group {
-  width: 360px;
+.bookmarks.drawer .add {
+  display: none;
+}
+// .group {
+//   width: 360px;
+//   .bookmark {
+//     display: inline-block;
+//   }
+// }
+
+/*------------------
+  Bookmark Sizes and Shapes
+------------------*/
+.bookmarks.small {
+  margin-left: -8px;
+  margin-right: -8px;
   .bookmark {
-    display: inline-block;
+    width: 65px;
+    margin: 0 8px;
+    margin-bottom: 8px;
+    .bookmark-image {
+      width: 40px;
+      height: 40px;
+    }
+    p {
+      font-size: 10px;
+    }
+  }
+}
+.bookmarks.medium {
+  margin-left: -10px;
+  margin-right: -10px;
+  .bookmark {
+    width: 80px;
+    margin: 0 10px;
+    margin-bottom: 10px;
+    .bookmark-image {
+      width: 50px;
+      height: 50px;
+    }
+    p {
+      font-size: 12px;
+    }
+  }
+}
+.bookmarks.large {
+  margin-left: -12px;
+  margin-right: -12px;
+  .bookmark {
+    width: 95px;
+    margin: 0 12px;
+    margin-bottom: 12px;
+    .bookmark-image {
+      width: 60px;
+      height: 60px;
+    }
+    p {
+      font-size: 15px;
+    }
+  }
+}
+.rounded {
+  .bookmark .bookmark-image {
+    border-radius: 20%;
+  }
+}
+.circle {
+  .bookmark .bookmark-image {
+    border-radius: 50%;
+  }
+}
+
+/*------------------
+  Drawer Adjustments
+------------------*/
+$small-margin: 1px;
+$medium-margin: 2px;
+$large-margin: 6px;
+.bookmarks.small.drawer {
+  margin-left: -$small-margin;
+  margin-right: -$small-margin;
+  .bookmark {
+    margin: 0 $small-margin;
+    margin-bottom: $small-margin;
+  }
+}
+.bookmarks.medium.drawer {
+  margin-left: -$medium-margin;
+  margin-right: -$medium-margin;
+  .bookmark {
+    margin: 0 $medium-margin;
+    margin-bottom: $medium-margin;
+  }
+}
+.bookmarks.large.drawer {
+  // margin-left: -$large-margin;
+  margin-left: 6px;
+  margin-right: -$large-margin;
+  .bookmark {
+    margin: 0 $large-margin;
+    margin-bottom: $large-margin;
+  }
+}
+
+/*------------------
+  Row Size Adjustments
+------------------*/
+$small-width: 81px;
+$medium-width: 100px;
+$large-width: 119px;
+.bookmarks.page-bookmarks.small {
+  &.per-row-4 {
+    width: 4*$small-width
+  }
+  &.per-row-5 {
+    width: 5*$small-width
+  }
+  &.per-row-6 {
+    width: 6*$small-width
+  }
+  &.per-row-7 {
+    width: 7*$small-width
+  }
+  &.per-row-8 {
+    width: 8*$small-width
+  }
+}
+.bookmarks.page-bookmarks.medium {
+  &.per-row-4 {
+    width: 4*$medium-width
+  }
+  &.per-row-5 {
+    width: 5*$medium-width
+  }
+  &.per-row-6 {
+    width: 100vw;
+    max-width: 6*$medium-width;
+  }
+  &.per-row-7 {
+    width: 7*$medium-width
+  }
+  &.per-row-8 {
+    width: 8*$medium-width
+  }
+}
+.bookmarks.page-bookmarks.large {
+  &.per-row-4 {
+    width: 4*$large-width
+  }
+  &.per-row-5 {
+    width: 5*$large-width
+  }
+  &.per-row-6 {
+    width: 6*$large-width
+  }
+  &.per-row-7 {
+    width: 7*$large-width
+  }
+  &.per-row-8 {
+    min-width: 8*$large-width
+  }
+}
+
+/*------------------
+  Context Menu
+------------------*/
+.react-contextmenu {
+  border: 1px solid black;
+  // margin-left: -374px;
+  // margin-top: -266px;
+  position: absolute !important;
+  top: 10px !important;
+  left: 78px !important;
+  z-index: 5;
+  background: #fff;
+}
+.react-contextmenu--visible + .context-menu-icon {
+  opacity: 1;
+}
+.react-contextmenu-item {
+  padding: 5px 5px;
+  border-bottom: 1px solid black;
+  &:last-of-type {
+    border-bottom: 0;
   }
 }

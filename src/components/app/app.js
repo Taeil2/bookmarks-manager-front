@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import AppContext from '../../appContext';
 
 import Page from '../page/page';
-import Login from '../login/login';
+import LoginPage from '../loginPage/loginPage';
 import Modal from '../modal/modal';
 
 export default class App extends React.Component {
@@ -23,7 +23,7 @@ export default class App extends React.Component {
         enable_hiding: false,
         icon_size: 'medium',
         icon_shape: 'rounded',
-        per_row: 5
+        per_row: 6
       }
     };
   }
@@ -36,7 +36,9 @@ export default class App extends React.Component {
     });
   };
 
-  closeModal = () => {
+  closeModal = (e) => {
+    e.preventDefault();
+
     this.setState({
       modalShown: false
     })
@@ -56,7 +58,9 @@ export default class App extends React.Component {
     }
   }
 
-  closeSidebar = () => {
+  closeSidebar = (e) => {
+    e.preventDefault();
+
     this.setState({
       sidebarShown: false
     })
@@ -74,7 +78,7 @@ export default class App extends React.Component {
         <AppContext.Provider value={contextValue}>
           <Router>
             <Route path="/" exact component={Page} />
-            <Route path="/login" component={Login} />
+            <Route path="/login" component={LoginPage} />
             <Route path="/page/:pageId" component={Page} />
           </Router>
           {this.state.modalShown && <Modal />}

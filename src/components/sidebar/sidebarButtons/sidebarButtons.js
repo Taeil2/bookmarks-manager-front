@@ -10,7 +10,7 @@ export default class SidebarButtons extends React.Component {
       <div className="buttons-container">
         <button className="icon-btn" onClick={(e) => this.context.showSidebar('Drawer')}><i className="fas fa-th-large"></i></button>
         <button className="icon-btn" onClick={(e) => this.context.showSidebar('Notes')}><i className="fas fa-book"></i></button>
-        {/* <button onClick={(e) => this.context.showSidebar('Notes')}><i className="fas fa-file-alt"></i></button> */}
+        {/* Notes alternative -  fa-file-alt */}
         <button className="icon-btn" onClick={(e) => this.context.showSidebar('Settings')}><i className="fas fa-cog"></i></button>
       </div>
     );
