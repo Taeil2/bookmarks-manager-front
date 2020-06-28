@@ -23,6 +23,7 @@
 ------------------*/
 .bookmarks {
   position: relative;
+  margin: 0 auto;
 }
 .bookmark {
   padding: 10px 0 5px;
@@ -86,8 +87,8 @@
   Bookmark Sizes and Shapes
 ------------------*/
 .bookmarks.small {
-  margin-left: -8px;
-  margin-right: -8px;
+  // margin-left: -8px;
+  // margin-right: -8px;
   .bookmark {
     width: 65px;
     margin: 0 8px;
@@ -102,8 +103,8 @@
   }
 }
 .bookmarks.medium {
-  margin-left: -10px;
-  margin-right: -10px;
+  // margin-left: -10px;
+  // margin-right: -10px;
   .bookmark {
     width: 80px;
     margin: 0 10px;
@@ -118,8 +119,8 @@
   }
 }
 .bookmarks.large {
-  margin-left: -12px;
-  margin-right: -12px;
+  // margin-left: -12px;
+  // margin-right: -12px;
   .bookmark {
     width: 95px;
     margin: 0 12px;
@@ -145,107 +146,224 @@
 }
 
 /*------------------
-  Drawer Adjustments
+  Media Queries
 ------------------*/
-$small-margin: 1px;
-$medium-margin: 2px;
-$large-margin: 6px;
-.bookmarks.small.drawer {
-  margin-left: -$small-margin;
-  margin-right: -$small-margin;
-  .bookmark {
-    margin: 0 $small-margin;
-    margin-bottom: $small-margin;
+$small-width: 81px;
+$medium-width: 100px;
+$large-width: 119px;
+
+.bookmarks.small {
+  width: 3*$small-width;
+  margin: 0 auto;
+}
+.bookmarks.small {
+  @media (min-width: 4*$small-width) {
+    width: 4*$small-width;
+  }
+  @media (min-width: 5*$small-width) {
+    width: 5*$small-width;
+  }
+  @media (min-width: 6*$small-width) {
+    width: 6*$small-width;
+  }
+  @media (min-width: 7*$small-width) {
+    width: 7*$small-width;
   }
 }
-.bookmarks.medium.drawer {
-  margin-left: -$medium-margin;
-  margin-right: -$medium-margin;
-  .bookmark {
-    margin: 0 $medium-margin;
-    margin-bottom: $medium-margin;
+$small-width-7: 7*$small-width + 120px;
+$small-width-8: 8*$small-width + 120px;
+.bookmarks.page-bookmarks.small {
+  @media (min-width: 600px) {
+    width: 6*$small-width;
+  }
+  @media (min-width: $small-width-7) {
+    width: 7*$small-width;
+  }
+  @media (min-width: $small-width-8) {
+    width: 8*$small-width;
   }
 }
-.bookmarks.large.drawer {
-  // margin-left: -$large-margin;
-  margin-left: 6px;
-  margin-right: -$large-margin;
-  .bookmark {
-    margin: 0 $large-margin;
-    margin-bottom: $large-margin;
+.bookmarks.medium {
+  width: 3*$medium-width;
+  margin: 0 auto;
+}
+.bookmarks.medium {
+  @media (min-width: 4*$medium-width) {
+    width: 4*$medium-width;
+  }
+  @media (min-width: 5*$medium-width) {
+    width: 5*$medium-width;
+  }
+}
+$medium-width-6: 6*$medium-width + 120px;
+$medium-width-7: 7*$medium-width + 120px;
+$medium-width-8: 8*$medium-width + 120px;
+.bookmarks.page-bookmarks.medium {
+  @media (min-width: 600px) {
+    width: 5*$medium-width;
+  }
+  @media (min-width: $medium-width-6) {
+    width: 6*$medium-width;
+  }
+  @media (min-width: $medium-width-7) {
+    width: 7*$medium-width;
+  }
+  @media (min-width: $medium-width-8) {
+    width: 8*$medium-width;
+  }
+}
+.bookmarks.large {
+  width: 2*$large-width;
+  margin: 0 auto;
+}
+.bookmarks.large {
+  @media (min-width: 4*$large-width) {
+    width: 4*$large-width;
+  }
+  @media (min-width: 4*$large-width) {
+    width: 4*$large-width;
+  }
+  @media (min-width: 5*$large-width) {
+    width: 5*$large-width;
+  }
+}
+$large-width-5: 5*$large-width + 120px;
+$large-width-6: 6*$large-width + 120px;
+$large-width-7: 7*$large-width + 120px;
+$large-width-8: 8*$large-width + 120px;
+.bookmarks.page-bookmarks.large {
+  @media (min-width: 600px) {
+    width: 4*$large-width;
+  }
+  @media (min-width: $large-width-5) {
+    width: 5*$large-width;
+  }
+  @media (min-width: $large-width-6) {
+    width: 6*$large-width;
+  }
+  @media (min-width: $large-width-7) {
+    width: 7*$large-width;
+  }
+  @media (min-width: $large-width-8) {
+    width: 8*$large-width;
   }
 }
 
 /*------------------
   Row Size Adjustments
 ------------------*/
-$small-width: 81px;
-$medium-width: 100px;
-$large-width: 119px;
 .bookmarks.page-bookmarks.small {
   &.per-row-4 {
-    width: 4*$small-width
+    max-width: 4*$small-width;
   }
   &.per-row-5 {
-    width: 5*$small-width
+    max-width: 5*$small-width;
   }
   &.per-row-6 {
-    width: 6*$small-width
+    max-width: 6*$small-width;
   }
   &.per-row-7 {
-    width: 7*$small-width
+    max-width: 7*$small-width;
   }
   &.per-row-8 {
-    width: 8*$small-width
+    max-width: 8*$small-width;
   }
 }
 .bookmarks.page-bookmarks.medium {
   &.per-row-4 {
-    width: 4*$medium-width
+    max-width: 4*$medium-width;
   }
   &.per-row-5 {
-    width: 5*$medium-width
+    max-width: 5*$medium-width;
   }
   &.per-row-6 {
-    width: 100vw;
     max-width: 6*$medium-width;
   }
   &.per-row-7 {
-    width: 7*$medium-width
+    max-width: 7*$medium-width;
   }
   &.per-row-8 {
-    width: 8*$medium-width
+    max-width: 8*$medium-width;
   }
 }
 .bookmarks.page-bookmarks.large {
   &.per-row-4 {
-    width: 4*$large-width
+    max-width: 4*$large-width;
   }
   &.per-row-5 {
-    width: 5*$large-width
+    max-width: 5*$large-width;
   }
   &.per-row-6 {
-    width: 6*$large-width
+    max-width: 6*$large-width;
   }
   &.per-row-7 {
-    width: 7*$large-width
+    max-width: 7*$large-width;
   }
   &.per-row-8 {
-    min-width: 8*$large-width
+    max-width: 8*$large-width;
   }
 }
+
+/*------------------
+  Drawer Adjustments
+------------------*/
+.bookmarks.drawer {
+  margin-left: -15px;
+}
+@media (min-width: 600px) {
+  .bookmarks.drawer {
+    margin-left: auto;
+  }
+  .bookmarks.drawer.small {
+    width: 4*$small-width;
+  }
+  .bookmarks.drawer.medium {
+    width: 3*$medium-width;
+  }
+  .bookmarks.drawer.large {
+    width: 3*$large-width;
+    margin-left: -12px;
+  }
+}
+
+
+// @media (min-width: 600px) {
+//   $small-margin: 1px;
+//   $medium-margin: 2px;
+//   $large-margin: 6px;
+//   .bookmarks.small.drawer {
+//     margin-left: -$small-margin;
+//     margin-right: -$small-margin;
+//     .bookmark {
+//       margin: 0 $small-margin;
+//       margin-bottom: $small-margin;
+//     }
+//   }
+//   .bookmarks.medium.drawer {
+//     margin-left: -$medium-margin;
+//     margin-right: -$medium-margin;
+//     .bookmark {
+//       margin: 0 $medium-margin;
+//       margin-bottom: $medium-margin;
+//     }
+//   }
+//   .bookmarks.large.drawer {
+//     margin-left: 6px;
+//     margin-right: -$large-margin;
+//     .bookmark {
+//       margin: 0 $large-margin;
+//       margin-bottom: $large-margin;
+//     }
+//   }
+// }
+
 
 /*------------------
   Context Menu
 ------------------*/
 .react-contextmenu {
   border: 1px solid black;
-  // margin-left: -374px;
-  // margin-top: -266px;
-  position: absolute !important;
-  top: 10px !important;
-  left: 78px !important;
-  z-index: 5;
+  z-index: 20;
   background: #fff;
 }
 .react-contextmenu--visible + .context-menu-icon {

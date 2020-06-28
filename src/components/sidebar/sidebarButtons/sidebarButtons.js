@@ -8,6 +8,7 @@ export default class SidebarButtons extends React.Component {
   render() {
     return (
       <div className="buttons-container">
+        <button className="icon-btn bookmarks-btn" id="bookmarks-btn" onClick={(e) => this.context.closeSidebar(e)}><i className="fas fa-bookmark"></i></button>
         <button className="icon-btn" onClick={(e) => this.context.showSidebar('Drawer')}><i className="fas fa-th-large"></i></button>
         <button className="icon-btn" onClick={(e) => this.context.showSidebar('Notes')}><i className="fas fa-book"></i></button>
         {/* Notes alternative -  fa-file-alt */}

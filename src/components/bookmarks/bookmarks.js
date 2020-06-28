@@ -15,7 +15,7 @@ export default class Bookmarks extends React.Component {
     let muuriGrids = {};
 
     muuriGrids[parentName] = new Muuri(muuriClass, {
-      // items: '.draggable',
+      items: '.draggable',
       dragEnabled: true,
       dragStartPredicate: {
         distance: 10,
@@ -51,7 +51,7 @@ export default class Bookmarks extends React.Component {
           </div> */}
           {bookmarks}
           <Folder parent={this.props.parent} number={1} />
-          <button className="bookmark add" onClick={(e) => this.context.showModal('AddForm')}>
+          <button className="bookmark add draggable" onClick={(e) => this.context.showModal('AddForm')}>
             <div className="bookmark-image icon-btn"><i className="fas fa-plus"></i></div>
             <p>Add Bookmark</p>
           </button>

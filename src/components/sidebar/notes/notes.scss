@@ -10,16 +10,20 @@
   }
   .ql-container.ql-snow {
     border: 0;
-    height: calc(100% - 86px);
+    height: unset;
+  }
+  @media (min-width: 600px) {
+
   }
 
   // editor
   .ql-toolbar.ql-snow .ql-formats {
-    margin-right: 6px;
+    margin-right: 2px;
   }
   .ql-editor {
     font-size: 16px;
     margin-top: 15px;
+    min-height: calc(100vh - 150px);
   }
   .ql-snow .ql-editor {
     h1 {
@@ -49,5 +53,11 @@
   }
   .ql-editor ul[data-checked=true] li:not(.ql-direction-rtl), .ql-editor ul[data-checked=false] li:not(.ql-direction-rtl) {
     padding-left: 1.5em;
+  }
+}
+
+@media (max-width: 380px) {
+  .ql-snow .ql-formats:last-of-type {
+    display: none;
   }
 }

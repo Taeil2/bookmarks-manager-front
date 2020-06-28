@@ -1,28 +1,72 @@
-$sidebarWidth: 375px;
+@import '../../variables.scss';
 
 .sidebar-container {
-  position: fixed;
-  z-index: 5;
+  position: absolute;
+  z-index: 10;
   top: 0;
-  right: 0;
-  width: $sidebarWidth;
-  border-left: 1px solid black;
+  left: 0;
+  width: 100vw;
   background: #fff;
-  display: flex;
-  height: 100%;
-  transition: right 250ms ease-out;
-  // overflow-y: auto;
-  &.show-false {
-    right: -$sidebarWidth;
+  &.show-false .sidebar {
+    display: none;
   }
-  &.show-true {
-    right: 0;
+  &.show-true .sidebar {
+    display: block;
+  }
+}
+
+.buttons-container {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  flex-direction: row;
+  button {
+    flex: 1 0 21%;
+    height: 50px;
+    font-size: 20px;
+    color: $light-gray;
+  }
+  button + button {
+    margin-left: -1px;
+  }
+  button:last-of-type {
+    border-right: 0;
+  }
+}
+
+@media (min-width: 600px) {
+  .buttons-container {
+    position: absolute;
+    bottom: unset;
+    align-self: center;
+    left: -60px;
+    width: unset;
+    flex-direction: column;
+    .bookmarks-btn {
+      display: none;
+    }
+    button {
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      flex: unset;
+    }
+    button + button {
+      margin-left: 0;
+      margin-top: -1px;
+    }
+    button:last-of-type {
+      border-right: 1px solid $light-gray;
+    }
   }
 }
 
 .sidebar {
   width: 100%;
-  padding: 20px;
+  height: calc(100vh - 50px);
+  padding: 20px 15px;
   overflow-y: auto;
   h2 {
     display: inline-block;
@@ -31,10 +75,42 @@ $sidebarWidth: 375px;
     }
   }
   .close-sidebar {
-    float: right;
-    background: none;
-    margin-top: -5px;
-    padding: 8px 12px;
-    border: 0;
+    display: none;
+  }
+}
+
+$sidebarWidth: 375px;
+@media (min-width: 600px) {
+  .sidebar {
+    height: 100vh;
+  }
+  .sidebar-container {
+    left: unset;
+
+    position: fixed;
+    right: 0;
+    max-width: $sidebarWidth;
+    border-left: 1px solid black;
+    display: flex;
+    height: 100%;
+    transition: right 250ms ease-out;
+    // overflow-y: auto;
+    &.show-false {
+      right: -$sidebarWidth;
+    }
+    &.show-true {
+      right: 0;
+    }
+  }
+  .sidebar {
+    padding: 20px;
+    .close-sidebar {
+      display: inline-block;
+      float: right;
+      background: none;
+      margin-top: -5px;
+      padding: 8px 12px;
+      border: 0;
+    }
   }
 }

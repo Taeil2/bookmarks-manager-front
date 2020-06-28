@@ -23,7 +23,7 @@ export default class App extends React.Component {
         enable_hiding: false,
         icon_size: 'medium',
         icon_shape: 'rounded',
-        per_row: 6
+        per_row: 8
       },
       note: '',
     };
@@ -47,7 +47,7 @@ export default class App extends React.Component {
 
   showSidebar = (sidebarComponent) => {
     // toggle the sidebar if it's the same button
-    if (sidebarComponent === this.state.sidebarComponent) {
+    if (sidebarComponent === this.state.sidebarComponent && document.getElementById('bookmarks-btn').offsetParent === null) {
       this.setState({
         sidebarShown: !this.state.sidebarShown
       });
