@@ -6,12 +6,15 @@
   top: 0;
   left: 0;
   width: 100vw;
-  background: #fff;
   &.show-false .sidebar {
-    display: none;
+    // visibility: hidden;
+    position: absolute;
+    left: 100vw;
   }
   &.show-true .sidebar {
-    display: block;
+    // visibility: visible;
+    position: unset;
+    left: unset;
   }
 }
 
@@ -67,6 +70,7 @@
   width: 100%;
   height: calc(100vh - 50px);
   padding: 20px 15px;
+  background: #fff;
   overflow-y: auto;
   h2 {
     display: inline-block;
@@ -100,6 +104,12 @@ $sidebarWidth: 375px;
     }
     &.show-true {
       right: 0;
+    }
+    &.show-false .sidebar {
+      position: relative;
+      left: unset;
+    }
+    &.show-true .sidebar {
     }
   }
   .sidebar {

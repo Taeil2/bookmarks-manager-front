@@ -23,9 +23,12 @@ export default class App extends React.Component {
         enable_hiding: false,
         icon_size: 'medium',
         icon_shape: 'rounded',
-        per_row: 8
+        icons_per_row: 6,
+        icon_alignment: 'left'
       },
-      note: '',
+      note: null,
+      pageMuuri: null,
+      drawerMuuri: null
     };
   }
 
@@ -67,12 +70,44 @@ export default class App extends React.Component {
     })
   }
 
+  changeSettings = (newSetting) => {
+    let newSettings = {...this.state.settings, ...newSetting}
+
+    this.setState({
+      settings: newSettings
+    });
+
+    this.state.pageMuuri.refreshItems();
+  }
+
+  setNote = (noteContent) => {
+    this.setState({
+      note: noteContent
+    })
+  }
+
+  setPageMuuri = (muuri) => {
+    this.setState({
+      pageMuuri: muuri
+    })
+  }
+
+  setDrawerMuuri = (muuri) => {
+    this.setState({
+      drawerMuuri: muuri
+    })
+  }
+
   render() {
     let contextValue = this.state;
     contextValue.showModal = this.showModal;
     contextValue.closeModal = this.closeModal;
     contextValue.showSidebar = this.showSidebar;
     contextValue.closeSidebar = this.closeSidebar;
+    contextValue.changeSettings = this.changeSettings;
+    contextValue.setNote = this.setNote;
+    contextValue.setPageMuuri = this.setPageMuuri;
+    contextValue.setDrawerMuuri = this.setDrawerMuuri;
 
     return (
       <>

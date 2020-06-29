@@ -9,30 +9,42 @@ import Folder from './folder/folder';
 export default class Bookmarks extends React.Component {
   static contextType = AppContext;
 
-  componentDidMount() {
-    let parentName = this.props.parent;
-    let muuriClass = '.' + parentName;
-    let muuriGrids = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      parentName: this.props.parent,
+      // muuriClass: '.' + this.props.parent
+    }
+  }
 
-    muuriGrids[parentName] = new Muuri(muuriClass, {
+  componentDidMount() {
+    let muuriClass = '.' + this.props.parent;
+    let newMuuri = new Muuri(muuriClass, {
       items: '.draggable',
       dragEnabled: true,
       dragStartPredicate: {
         distance: 10,
         delay: 0
       },
-      /*
-      dragSort: function() {
-        return [muuriGrids['page-bookmarks'], muuriGrids['drawer']]
+      layout: {
+        // alignRight: true
       }
-      */
+      // dragSort: function() {
+      //   return [muuriGrids['page-bookmarks'], muuriGrids['drawer']]
+      // }
     });
 
-    muuriGrids[parentName].on('dragReleaseEnd', (item, event) => {
-      console.log('dragReleaseEnd');
-      console.log(item);
-      console.log(event);
+    newMuuri.on('dragReleaseEnd', (item, event) => {
+      console.log('dragReleaseEnd', item);
     });
+
+    this.context.setPageMuuri(newMuuri);
+  }
+ss
+  componentDidUpdate() {
+    console.log('updating');
+    // console.log(this.context.pageMuuri);
+    // this.context.pageMuuri.refreshItems();
   }
 
   render() {
@@ -43,7 +55,7 @@ export default class Bookmarks extends React.Component {
 
     return (
       <>
-        <section className={'bookmarks ' + this.props.parent + ' ' + this.context.settings.icon_size + ' ' + this.context.settings.icon_shape + ' per-row-' + this.context.settings.per_row}>
+        <section className={'bookmarks ' + this.props.parent + ' ' + this.context.settings.icon_size + ' ' + this.context.settings.icon_shape + ' per-row-' + this.context.settings.icons_per_row}>
           {/* <div className="group">
             <Bookmark />
             <Bookmark />

@@ -1,15 +1,13 @@
 import React from 'react';
 import './folder.scss';
+import AppContext from '../../../appContext';
 
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 
 export default class Folder extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  static contextType = AppContext;
 
   handleBookmarkClick = (e) => {
-    console.log('clicked');
     console.log(e.target.classList);
     this.context.showModal('FolderContents')
   }
@@ -28,28 +26,25 @@ export default class Folder extends React.Component {
     }
 
     return (
-      <div className="draggable">
-        <ContextMenuTrigger id={this.props.parent + '-' + this.props.number} ref={(c) => contextTrigger = c}>
-          <div className="bookmark folder" onClick={(e) => this.handleFolderClick(e) }>
-            <div className="bookmark-image">
-              {/* <img src="https://www.google.com/images/branding/product_ios/3x/gsa_ios_60dp.png"></img> */}
+      <>
+        <div className="draggable">
+          <ContextMenuTrigger id={'folder-' + this.props.parent + '-' + this.props.number} ref={(c) => contextTrigger = c}>
+            <div className="bookmark folder"  onClick={(e) => this.context.showModal('FolderContents') }>
+              <div className="bookmark-image">
+                {/* <img src="https://www.google.com/images/branding/product_ios/3x/gsa_ios_60dp.png"></img> */}
+              </div>
+              <p>Folder</p>
+              <div className="context-menu-icon" onClick={toggleMenu}><i className="fas fa-ellipsis-v"></i></div>
             </div>
-            <p>Folder</p>
-            <div className="context-menu-icon" onClick={toggleMenu}><i className="fas fa-ellipsis-v"></i></div>
-            <ContextMenu id={this.props.parent + '-' + this.props.number}>
-              <MenuItem data={{foo: 'bar'}} onClick={this.handleMenuClick}>
-                Edit
-              </MenuItem>
-              <MenuItem data={{foo: 'bar'}} onClick={this.handleMenuClick}>
-                Move
-              </MenuItem>
-              <MenuItem data={{foo: 'bar'}} onClick={this.handleMenuClick}>
-                Remove
-              </MenuItem>
-            </ContextMenu>
-          </div>
-        </ContextMenuTrigger>
-      </div>
+          </ContextMenuTrigger>
+        </div>
+        <ContextMenu id={'folder-' + this.props.parent + '-' + this.props.number}>
+          <MenuItem data={{foo: 'bar'}} onClick={this.handleMenuClick}>Rename</MenuItem>
+          <MenuItem data={{foo: 'bar'}} onClick={this.handleMenuClick}>Move</MenuItem>
+          {/* <MenuItem data={{foo: 'bar'}} onClick={this.handleMenuClick}>Hide</MenuItem> */}
+          <MenuItem data={{foo: 'bar'}} onClick={this.handleMenuClick}>Remove</MenuItem>
+        </ContextMenu>
+      </>
     );
   }
 }

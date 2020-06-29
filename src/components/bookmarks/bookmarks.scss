@@ -326,37 +326,13 @@ $large-width-8: 8*$large-width + 120px;
   }
 }
 
-
-// @media (min-width: 600px) {
-//   $small-margin: 1px;
-//   $medium-margin: 2px;
-//   $large-margin: 6px;
-//   .bookmarks.small.drawer {
-//     margin-left: -$small-margin;
-//     margin-right: -$small-margin;
-//     .bookmark {
-//       margin: 0 $small-margin;
-//       margin-bottom: $small-margin;
-//     }
-//   }
-//   .bookmarks.medium.drawer {
-//     margin-left: -$medium-margin;
-//     margin-right: -$medium-margin;
-//     .bookmark {
-//       margin: 0 $medium-margin;
-//       margin-bottom: $medium-margin;
-//     }
-//   }
-//   .bookmarks.large.drawer {
-//     margin-left: 6px;
-//     margin-right: -$large-margin;
-//     .bookmark {
-//       margin: 0 $large-margin;
-//       margin-bottom: $large-margin;
-//     }
-//   }
-// }
-
+/*------------------
+  Folder Adjustments
+------------------*/
+.bookmarks.folder-contents {
+  margin-left: -15px;
+  margin-right: -15px;
+}
 
 /*------------------
   Context Menu

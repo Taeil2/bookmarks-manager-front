@@ -30,14 +30,31 @@ export default class Notes extends React.Component {
     document.getElementsByClassName('ql-toolbar')[0].remove();
   }
 
+  handleKeyPress = (e) => {
+    let content = e.target.children;
+    this.context.setNote(content);
+
+    // console.log('hi');
+    // console.log('note', this.context.note);
+  }
+
   render() {
+    let noteContent = '';
+    // console.log(this.context.note);
+    if (this.context.note !== null) {
+      // noteContent = Array.prototype.slice.call(this.context.note);
+      let htmlArray = [...this.context.note];
+      noteContent += htmlArray.map(el => el.outerHTML);
+    }
+    console.log(noteContent);
+
     return (
       <>
         <header>
           <h2><i className="fas fa-book"></i> Notes</h2>
           <button className="close-sidebar icon-btn" onClick={(e) => this.context.closeSidebar(e)}><i className="fas fa-times"></i></button>
         </header>
-        <div id="quill-editor"></div>
+        <div id="quill-editor" onKeyPress={this.handleKeyPress}></div>
       </>
     );
   }

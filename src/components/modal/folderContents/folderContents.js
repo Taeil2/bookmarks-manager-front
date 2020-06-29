@@ -15,12 +15,11 @@ export default class FolderContents extends React.Component {
     }
   }
 
-
-
   render() {
     return (
-      <div>
-
+      <div className="folder-contents-container">
+        <Bookmarks parent="folder-contents" />
+        <button className="close-modal icon-btn" onClick={(e) => this.context.closeModal(e)}><i className="fas fa-times"></i></button>
       </div>
     );
   }

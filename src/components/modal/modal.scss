@@ -15,8 +15,17 @@
   display: flex;
   flex-direction: column;
   min-width: 300px;
+  max-width: calc(100vw - 30px);
+  max-height: calc(100vh - 30px);
+  overflow-y: auto;
   padding: 20px;
   border: 1px solid black;
   background: #fff;
   align-self: center;
+  .close-modal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+  }
 }

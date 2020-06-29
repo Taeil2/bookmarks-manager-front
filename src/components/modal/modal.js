@@ -20,7 +20,7 @@ export default class Modal extends React.Component {
       case 'AddForm':
         modalComponent = <AddForm />;
         break;
-      case 'AddForm':
+      case 'FolderContents':
         modalComponent = <FolderContents />;
         break;
       default:
