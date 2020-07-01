@@ -7,9 +7,10 @@ import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 export default class Folder extends React.Component {
   static contextType = AppContext;
 
-  handleBookmarkClick = (e) => {
-    console.log(e.target.classList);
-    this.context.showModal('FolderContents')
+  handleFolderClick = (e) => {
+    if (!this.context.dragging) {
+      this.context.showModal('FolderContents')
+    }
   }
 
   handleMenuClick(e, data) {
@@ -27,9 +28,9 @@ export default class Folder extends React.Component {
 
     return (
       <>
-        <div className="draggable">
+        <div className="draggable hidden-false">
           <ContextMenuTrigger id={'folder-' + this.props.parent + '-' + this.props.number} ref={(c) => contextTrigger = c}>
-            <div className="bookmark folder"  onClick={(e) => this.context.showModal('FolderContents') }>
+            <div className="bookmark folder"  onClick={(e) => this.handleFolderClick(e) }>
               <div className="bookmark-image">
                 {/* <img src="https://www.google.com/images/branding/product_ios/3x/gsa_ios_60dp.png"></img> */}
               </div>

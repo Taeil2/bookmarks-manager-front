@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 /*------------------
   Login
 ------------------*/
@@ -41,6 +43,14 @@
       display: block;
       text-align: center;
     }
+  }
+  .register-success {
+    background: $green;
+    color: #fff;
+    padding: 8px 5px;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 15px;
   }
 }
 

@@ -1,11 +1,19 @@
 import React from 'react';
 import './loginPage.scss';
+import validator from 'email-validator';
 
 import Features from './features/features';
 import Login from './login/login';
 import Register from'./register/register';
+import TokenService from '../../services/token-service'
+import AuthApiService from '../../services/auth-api-service'
 
 export default class LoginPage extends React.Component {
+  // static defaultProps = {
+  //   onLoginSuccess: () => {},
+  //   onRegistrationSuccess: () => {}
+  // }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -13,6 +21,8 @@ export default class LoginPage extends React.Component {
       email: '',
       password: '',
       repeatPassword: '',
+      error: null,
+      registerSuccess: false
     }
   }
 
@@ -28,17 +38,59 @@ export default class LoginPage extends React.Component {
   handleLogin = (e) => {
     e.preventDefault();
 
-    console.log(this.state.email);
-    console.log(this.state.password);
-    console.log(this.state.repeatPassword);
+    this.setState({ error: null })
+
+    AuthApiService.postLogin({
+      email: this.state.email,
+      password: this.state.password
+    })
+    .then(res => {
+      this.setState({
+        email: '',
+        password: ''
+      });
+      TokenService.saveAuthToken(res.authToken)
+      // this.props.onLoginSuccess()
+      console.log('login success');
+      window.location.reload(false);
+    })
+    .catch(res => {
+      this.setState({ error: res.error })
+    })
   }
 
   handleRegister = (e) => {
     e.preventDefault();
+    this.setState({ error: null })
 
-    console.log(this.state.email);
-    console.log(this.state.password);
-    console.log(this.state.repeatPassword);
+    // check
+    if (this.state.email === '' || this.state.password === '' || this.state.repeatPassword === '') {
+      console.log('fill all fields')
+    }
+    if (!validator.validate(this.state.email)) {
+      console.log('not a valid email');
+    }
+
+    AuthApiService.postUser({
+      email: this.state.email,
+      password: this.state.password,
+    })
+      .then(user => {
+        this.setState({
+          email: '',
+          password: '',
+          repeatPassword: ''
+        });
+        // this.props.onRegistrationSuccess()
+        console.log('registration success');
+        this.setState({
+          loginRegisterComponent: 'Login',
+          registerSuccess: true
+        });
+      })
+      .catch(res => {
+        this.setState({ error: res.error })
+      })
   }
 
   render() {

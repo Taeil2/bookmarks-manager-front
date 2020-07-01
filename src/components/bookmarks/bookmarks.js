@@ -9,14 +9,6 @@ import Folder from './folder/folder';
 export default class Bookmarks extends React.Component {
   static contextType = AppContext;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      parentName: this.props.parent,
-      // muuriClass: '.' + this.props.parent
-    }
-  }
-
   componentDidMount() {
     let muuriClass = '.' + this.props.parent;
     let newMuuri = new Muuri(muuriClass, {
@@ -28,23 +20,42 @@ export default class Bookmarks extends React.Component {
       },
       layout: {
         // alignRight: true
-      }
-      // dragSort: function() {
-      //   return [muuriGrids['page-bookmarks'], muuriGrids['drawer']]
-      // }
+      },
+      dragSort: this.getAllGrids,
+    });
+
+    // Set drag start and end events to disable other click events while dragging
+    newMuuri.on('dragInit', (item, event) => {
+      this.context.changeContext({dragging: true});
     });
 
     newMuuri.on('dragReleaseEnd', (item, event) => {
-      console.log('dragReleaseEnd', item);
+      this.context.changeContext({dragging: false});
     });
 
-    this.context.setPageMuuri(newMuuri);
+    if (this.props.parent === 'page-bookmarks') {
+      this.context.changeContext({pageMuuri: newMuuri});
+    }
+    if (this.props.parent === 'drawer') {
+      this.context.setDrawerMuuri(newMuuri);
+      // not sure why this is breaking
+      // this.context.changeContext({drawerMuuri: newMuuri});
+    }
   }
-ss
+
+  getAllGrids = () => {
+    return [this.context.drawerMuuri, this.context.pageMuuri];
+  }
+
   componentDidUpdate() {
-    console.log('updating');
-    // console.log(this.context.pageMuuri);
-    // this.context.pageMuuri.refreshItems();
+    // Triggering a resize causes Muuri to refresh its layout
+    window.dispatchEvent(new Event('resize'));
+  }
+
+  handleAddClick = (e) => {
+    if (!this.context.dragging) {
+      this.context.showModal('AddForm');
+    }
   }
 
   render() {
@@ -63,9 +74,9 @@ ss
           </div> */}
           {bookmarks}
           <Folder parent={this.props.parent} number={1} />
-          <button className="bookmark add draggable" onClick={(e) => this.context.showModal('AddForm')}>
+          <button className="bookmark add draggable hidden-false" onClick={(e) => this.handleAddClick(e)}>
             <div className="bookmark-image icon-btn"><i className="fas fa-plus"></i></div>
-            <p>Add Bookmark</p>
+            <p>Add</p>
           </button>
         </section>
       </>

@@ -1,8 +1,10 @@
 import React from 'react';
 import './app.scss';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import AppContext from '../../appContext';
 
+import PrivateRoute from '../utils/privateRoute';
+import PublicRoute from '../utils/publicRoute';
 import Page from '../page/page';
 import LoginPage from '../loginPage/loginPage';
 import Modal from '../modal/modal';
@@ -11,24 +13,28 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      pages: [],
       bookmarks: [],
       modalShown: false,
       modalComponent: 'AddForm',
       sidebarShown: false,
       sidebarComponent: 'Drawer',
       settings: {
-        enable_pages: false,
+        enable_pages: true,
         enable_folders: false,
         enable_groups: false,
         enable_hiding: false,
         icon_size: 'medium',
         icon_shape: 'rounded',
-        icons_per_row: 6,
+        icons_per_row: 5,
         icon_alignment: 'left'
       },
+      initialNote: null,
       note: null,
       pageMuuri: null,
-      drawerMuuri: null
+      drawerMuuri: null,
+      expanded: false,
+      dragging: false,
     };
   }
 
@@ -70,20 +76,18 @@ export default class App extends React.Component {
     })
   }
 
-  changeSettings = (newSetting) => {
-    let newSettings = {...this.state.settings, ...newSetting}
+  changeContext = (contextUpdate) => {
+    let newContext = {...this.state, ...contextUpdate}
+
+    this.setState(newContext);
+  }
+
+  changeSettings = (settingUpdate) => {
+    let newSettings = {...this.state.settings, ...settingUpdate}
 
     this.setState({
       settings: newSettings
     });
-
-    this.state.pageMuuri.refreshItems();
-  }
-
-  setNote = (noteContent) => {
-    this.setState({
-      note: noteContent
-    })
   }
 
   setPageMuuri = (muuri) => {
@@ -104,8 +108,8 @@ export default class App extends React.Component {
     contextValue.closeModal = this.closeModal;
     contextValue.showSidebar = this.showSidebar;
     contextValue.closeSidebar = this.closeSidebar;
+    contextValue.changeContext = this.changeContext;
     contextValue.changeSettings = this.changeSettings;
-    contextValue.setNote = this.setNote;
     contextValue.setPageMuuri = this.setPageMuuri;
     contextValue.setDrawerMuuri = this.setDrawerMuuri;
 
@@ -113,9 +117,12 @@ export default class App extends React.Component {
       <>
         <AppContext.Provider value={contextValue}>
           <Router>
-            <Route path="/" exact component={Page} />
+            <PublicRoute path={'/'} component={LoginPage} />
+            <PrivateRoute path={'/'} component={Page} />
+            <PrivateRoute path={'/page/:pageId'} component = {Page} />
+            {/* <Route path="/" exact component={Page} />
             <Route path="/login" component={LoginPage} />
-            <Route path="/page/:pageId" component={Page} />
+            <Route path="/page/:pageId" component={Page} /> */}
           </Router>
           {this.state.modalShown && <Modal />}
         </AppContext.Provider>

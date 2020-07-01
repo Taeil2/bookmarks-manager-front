@@ -9,13 +9,14 @@
   z-index: 1;
 }
 .muuri-item-dragging {
-  z-index: 3;
+  z-index: 100;
 }
 .muuri-item-releasing {
   z-index: 2;
 }
 .muuri-item-hidden {
   z-index: 0;
+  display: none;
 }
 
 /*------------------
@@ -348,7 +349,13 @@ $large-width-8: 8*$large-width + 120px;
 .react-contextmenu-item {
   padding: 5px 5px;
   border-bottom: 1px solid black;
+  cursor: pointer;
   &:last-of-type {
     border-bottom: 0;
+  }
+}
+.drawer {
+  .hide-btn, .group-btn {
+    display: none;
   }
 }

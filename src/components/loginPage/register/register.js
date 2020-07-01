@@ -6,7 +6,7 @@ export default class Register extends React.Component {
   render() {
     return (
       <div className="registration-box">
-        <h4>Login</h4>
+        <h4>Register</h4>
         <form onSubmit={(e) => this.props.handleRegister(e)}>
           <label htmlFor="email">Email</label>
           <input type="text" id="email" value={this.props.vars.email} onChange={e => this.props.handleChange(e.target.value, 'email')} />

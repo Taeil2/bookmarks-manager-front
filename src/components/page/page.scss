@@ -25,3 +25,12 @@
     padding: 0 70px;
   }
 }
+
+
+.page-buttons {
+  display: flex;
+  justify-content: space-between;
+  > :only-child {
+    margin: 0 auto;
+  }
+}
