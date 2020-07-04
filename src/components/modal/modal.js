@@ -3,6 +3,7 @@ import './modal.scss';
 import AppContext from '../../appContext';
 
 import AddForm from './addForm/addForm';
+import EditForm from './editForm/editForm';
 import FolderContents from './folderContents/folderContents';
 
 export default class Modal extends React.Component {
@@ -10,7 +11,7 @@ export default class Modal extends React.Component {
 
   handleClick = (e) => {
     if (e.target.classList.contains('modal-container')) {
-      this.context.closeModal(e);
+      this.context.closeModal();
     }
   }
 
@@ -19,6 +20,9 @@ export default class Modal extends React.Component {
     switch(this.context.modalComponent) {
       case 'AddForm':
         modalComponent = <AddForm />;
+        break;
+      case 'EditForm':
+        modalComponent = <EditForm />;
         break;
       case 'FolderContents':
         modalComponent = <FolderContents />;

@@ -51,7 +51,6 @@ export default class LoginPage extends React.Component {
       });
       TokenService.saveAuthToken(res.authToken)
       // this.props.onLoginSuccess()
-      console.log('login success');
       window.location.reload(false);
     })
     .catch(res => {
@@ -82,7 +81,6 @@ export default class LoginPage extends React.Component {
           repeatPassword: ''
         });
         // this.props.onRegistrationSuccess()
-        console.log('registration success');
         this.setState({
           loginRegisterComponent: 'Login',
           registerSuccess: true

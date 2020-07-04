@@ -9,8 +9,31 @@ import Folder from './folder/folder';
 export default class Bookmarks extends React.Component {
   static contextType = AppContext;
 
-  componentDidMount() {
-    let muuriClass = '.' + this.props.parent;
+  componentDidUpdate() {
+    console.log('componentdidupdate');
+
+    // Triggering a resize causes Muuri to refresh its layout
+    window.dispatchEvent(new Event('resize'));
+
+    // init the muuri
+    if (!this.context.pageBookmarksLoaded) {
+      if (this.context.pageBookmarks.length > 0) {
+        this.initMuuri();
+        this.context.changeContext({pageBookmarksLoaded: true})
+      }
+    }
+
+    // init the muuri
+    if (!this.context.drawerBookmarksLoaded) {
+      if (this.context.drawerBookmarks.length > 0) {
+        this.initMuuri();
+        this.context.changeContext({drawerBookmarksLoaded: true})
+      }
+    }
+  }
+
+  initMuuri = () => {
+    let muuriClass = `.${this.props.parent}-${this.props.id}`;
     let newMuuri = new Muuri(muuriClass, {
       items: '.draggable',
       dragEnabled: true,
@@ -47,33 +70,60 @@ export default class Bookmarks extends React.Component {
     return [this.context.drawerMuuri, this.context.pageMuuri];
   }
 
-  componentDidUpdate() {
-    // Triggering a resize causes Muuri to refresh its layout
-    window.dispatchEvent(new Event('resize'));
-  }
-
   handleAddClick = (e) => {
     if (!this.context.dragging) {
+      this.context.changeContext({addOrigin: this.context.activePage});
       this.context.showModal('AddForm');
     }
   }
 
   render() {
     let bookmarks = [];
-    for (let i = 0; i < 16; i++) {
-      bookmarks.push(<Bookmark key={i} parent={this.props.parent} number={i} />);
+
+    if (this.props.parent === 'page-bookmarks') {
+      // get bookmarks for the page (not in a folder)
+      let screenBookmarks = this.context.pageBookmarks.filter(bookmark => bookmark.folder_name === '');
+      screenBookmarks.sort((a, b) => {
+        if (a.bookmark_order < b.bookmark_order) { return -1; }
+        if (b.bookmark_order > a.bookmark_order) { return 1; }
+        return 0;
+      })
+      for (let i = 0; i < screenBookmarks.length; i++) {
+        if (!screenBookmarks[i].is_folder) {
+          bookmarks.push(<Bookmark bookmark={screenBookmarks[i]} parent={this.props.parent} number={this.context.activePage} key={i} />);
+        } else {
+          bookmarks.push(<Folder folder={screenBookmarks[i]} parent={this.props.parent} number={this.context.activePage} key={i} />)
+        }
+      }
+
+      // get bookmarks for each folder
+
+    }
+    if (this.props.parent === 'drawer') {
+      // get bookmarks for the page (not in a folder)
+      let drawerBookmarks = this.context.drawerBookmarks.filter(bookmark => bookmark.folder_name === '')
+      drawerBookmarks.sort((a, b) => {
+        if (a.bookmark_order < b.bookmark_order) { return -1; }
+        if (b.bookmark_order > a.bookmark_order) { return 1; }
+        return 0;
+      })
+      for (let i = 0; i < drawerBookmarks.length; i++) {
+        if (!drawerBookmarks[i].is_folder) {
+          bookmarks.push(<Bookmark bookmark={drawerBookmarks[i]} parent={this.props.parent} number={this.context.activePage} key={i} />);
+        } else {
+          bookmarks.push(<Folder folder={drawerBookmarks[i]} parent={this.props.parent} number={this.context.activePage} key={i} />)
+        }
+      }
+
+      // get bookmarks for each folder
+
+
     }
 
     return (
       <>
-        <section className={'bookmarks ' + this.props.parent + ' ' + this.context.settings.icon_size + ' ' + this.context.settings.icon_shape + ' per-row-' + this.context.settings.icons_per_row}>
-          {/* <div className="group">
-            <Bookmark />
-            <Bookmark />
-            <Bookmark />
-          </div> */}
+        <section className={'bookmarks ' + this.props.parent + ' ' + this.props.parent + '-' + this.props.id + ' ' + this.context.settings.icon_size + ' ' + this.context.settings.icon_shape + ' per-row-' + this.context.settings.icons_per_row}>
           {bookmarks}
-          <Folder parent={this.props.parent} number={1} />
           <button className="bookmark add draggable hidden-false" onClick={(e) => this.handleAddClick(e)}>
             <div className="bookmark-image icon-btn"><i className="fas fa-plus"></i></div>
             <p>Add</p>

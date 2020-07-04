@@ -10,7 +10,7 @@ import PageNavigation from './pageNavigation/pageNavigation';
 import Bookmarks from '../bookmarks/bookmarks';
 import Sidebar from '../sidebar/sidebar';
 import TokenService from '../../services/token-service';
-
+import BookmarksApiService from '../../services/bookmarks-api-service';
 
 export default class Page extends React.Component {
   static contextType = AppContext;
@@ -25,7 +25,6 @@ export default class Page extends React.Component {
   loadUserData = () => {
     UsersService.getUserById()
       .then((result) => {
-        console.log(result);
         this.context.changeSettings({
           initialNote: result.note,
           enable_pages: result.enable_pages,
@@ -37,12 +36,21 @@ export default class Page extends React.Component {
           enable_groups: result.enable_groups,
           enable_hiding: result.enable_hiding
         });
-      })
+      });
 
     PagesApiService.getPages()
       .then((result) => {
         this.context.changeContext({pages: result})
-      })
+        this.getBookmarks();
+      });
+  }
+
+  getBookmarks = () => {
+    BookmarksApiService.getBookmarksByPage(this.context.activePage)
+      .then(result => this.context.changeContext({pageBookmarks: result}));
+    let drawer = this.context.pages.filter((page) => page.is_drawer === true)[0];
+    BookmarksApiService.getBookmarksByPage(drawer.id)
+      .then(result => this.context.changeContext({drawerBookmarks: result}));
   }
 
   handleLogoutClick = () => {
@@ -71,7 +79,7 @@ export default class Page extends React.Component {
     if (this.state.hidden === false) {
       toggleName = 'Expand';
     } else {
-      toggleName = 'Collapse';
+      toggleName = 'Hide';
     }
 
     if (this.context.settings.enable_pages === true) {
@@ -90,7 +98,7 @@ export default class Page extends React.Component {
             {pageNavigation}
             {expandBtn}
           </div>
-          <Bookmarks parent="page-bookmarks" />
+          <Bookmarks parent="page-bookmarks" id={this.context.activePage} />
         </div>
         <Sidebar />
       </main>

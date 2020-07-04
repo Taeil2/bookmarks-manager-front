@@ -14,9 +14,12 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       pages: [],
-      bookmarks: [],
+      activePage: null,
+      pageBookmarks: [],
+      drawerBookmarks: [],
       modalShown: false,
       modalComponent: 'AddForm',
+      addOrigin: null,
       sidebarShown: false,
       sidebarComponent: 'Drawer',
       settings: {
@@ -33,8 +36,12 @@ export default class App extends React.Component {
       note: null,
       pageMuuri: null,
       drawerMuuri: null,
+      pageMuuriLoaded: false,
+      drawerMuuriLoaded: false,
       expanded: false,
       dragging: false,
+      editObject: null,
+      editOrigin: null,
     };
   }
 
@@ -46,9 +53,8 @@ export default class App extends React.Component {
     });
   };
 
-  closeModal = (e) => {
-    e.preventDefault();
-
+  closeModal = () => {
+    // e.preventDefault();
     this.setState({
       modalShown: false
     })
@@ -102,6 +108,18 @@ export default class App extends React.Component {
     })
   }
 
+  componentDidUpdate() {
+    let pageId = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+    if (pageId === '' && this.state.pages.length) {
+      pageId = this.state.pages[0].id;
+    } else {
+      pageId = Number(pageId);
+    }
+    if (pageId !== this.state.activePage) {
+      this.setState({activePage: pageId});
+    }
+  }
+
   render() {
     let contextValue = this.state;
     contextValue.showModal = this.showModal;
@@ -113,16 +131,16 @@ export default class App extends React.Component {
     contextValue.setPageMuuri = this.setPageMuuri;
     contextValue.setDrawerMuuri = this.setDrawerMuuri;
 
+    console.log('context:', this.state);
+
     return (
       <>
         <AppContext.Provider value={contextValue}>
           <Router>
             <PublicRoute path={'/'} component={LoginPage} />
-            <PrivateRoute path={'/'} component={Page} />
-            <PrivateRoute path={'/page/:pageId'} component = {Page} />
-            {/* <Route path="/" exact component={Page} />
-            <Route path="/login" component={LoginPage} />
-            <Route path="/page/:pageId" component={Page} /> */}
+            <PrivateRoute path={'/'} exact component={Page} />
+            {/* <PrivateRoute path={'/page/:pageId'} render={(routeProps) => <Page routeProps={routeProps} /> } /> */}
+            <PrivateRoute path={'/page/:pageId'} exact component={Page} testprops="testing" />
           </Router>
           {this.state.modalShown && <Modal />}
         </AppContext.Provider>

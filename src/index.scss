@@ -111,6 +111,7 @@ button, .btn {
     &.active {
       color: $purple;
       border-bottom: 2px solid $purple;
+      font-weight: bold;
     }
   }
 }
@@ -189,4 +190,11 @@ input:checked + .slider:before {
   .wrapper {
     padding: 0 20px;
   }
+}
+
+/*------------------
+  Helpers
+------------------*/
+.hidden {
+  display: none;
 }
