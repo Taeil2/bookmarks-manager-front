@@ -16,7 +16,11 @@ export default class Bookmarks extends React.Component {
       dragStartPredicate: {
         distance: 10,
         delay: 0
-      }
+      },
+      onDragStart: function (item, event) {
+      },
+      onDragEnd: function (item) {
+      },
       // dragStartPredicate: function(item, e) {
       //   if (item._element.classList.contains('draggable')) {
       //     return true;

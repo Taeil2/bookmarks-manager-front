@@ -203,7 +203,7 @@ export default class Bookmark extends React.Component {
   }
 
   render() {
-    console.log(this.props.bookmark);
+    // console.log(this.props.bookmark);
 
     let contextTrigger = null;
 

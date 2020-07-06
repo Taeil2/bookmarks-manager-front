@@ -20,7 +20,7 @@ export default class Login extends React.Component {
             <div className="success">Registration complete! Login now.</div>
           }
         </form>
-        <p>Have an account? <a href="/" onClick={(e) => this.props.updateComponent(e, 'Register')}>Register</a></p>
+        <p>Need an account? <a href="/" onClick={(e) => this.props.updateComponent(e, 'Register')}>Register</a></p>
       </div>
     );
   }

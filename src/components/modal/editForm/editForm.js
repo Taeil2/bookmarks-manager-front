@@ -70,7 +70,6 @@ export default class EditForm extends React.Component {
           .then(data => {
             BookmarkImagesApiService.insertBookmarkImages(data)
             .then(result => {
-              console.log(result);
               this.context.loadUserData();
             })
           });
@@ -95,8 +94,6 @@ export default class EditForm extends React.Component {
   }
 
   render() {
-    console.log('edit object', this.context.editObject);
-
     let formTitle;
     let urlHidden;
     let submitText;

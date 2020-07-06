@@ -101,7 +101,6 @@ export default class AddForm extends React.Component {
           .then(data => {
             BookmarkImagesApiService.insertBookmarkImages(data)
             .then(result => {
-              console.log(result);
               this.context.loadUserData();
             })
           });

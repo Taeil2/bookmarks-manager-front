@@ -24,7 +24,7 @@ export default class Register extends React.Component {
             <div className="failure">{this.props.vars.error}</div>
           }
         </form>
-        <p>Need an account? <a href="/" onClick={(e) => this.props.updateComponent(e, 'Login')}>Login</a></p>
+        <p>Have an account? <a href="/" onClick={(e) => this.props.updateComponent(e, 'Login')}>Login</a></p>
       </div>
     );
   }

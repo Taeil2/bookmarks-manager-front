@@ -73,9 +73,6 @@ export default class Notes extends React.Component {
 
   render() {
     let initialNotesHtml = ReactHtmlParser(this.state.initialNote);
-    console.log(initialNotesHtml);
-    // console.log(typeof html);
-
     return (
       <>
         <header>
@@ -84,8 +81,6 @@ export default class Notes extends React.Component {
         </header>
         <div id="quill-editor" onKeyPress={this.handleKeyPress}>
           {initialNotesHtml}
-          {/* <h1>Header</h1>
-          <p>This is a paragraph. <strong>BOLD</strong></p> */}
         </div>
       </>
     );

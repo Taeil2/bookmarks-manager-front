@@ -175,7 +175,7 @@ export default class Page extends React.Component {
     contextValue.changeSettings = this.changeSettings;
     contextValue.loadUserData = this.loadUserData;
 
-    console.log('context:', this.state);
+    // console.log('context:', this.state);
 
     let pageNavigation;
     let expandBtn;
