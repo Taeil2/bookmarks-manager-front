@@ -7,19 +7,18 @@ Main features:
 - Write a note
 - Adjust the layout and appearance
 
-[http://localhost:3000](Live Demo)
-[https://github.com/Taeil2/bookmarks-manager-back](Back End Repo)
+[Live Demo](http://localhost:3000)<br/>
+[Back End Repo](https://github.com/Taeil2/bookmarks-manager-back)
 
 ### Front End Stack
-React
+React<br/>
 SASS
 
 ### Libraries
-
-[https://paol-imi.github.io/muuri-react/](https://paol-imi.github.io/muuri-react/)
-[https://quilljs.com/](Quill)
-[http://showdownjs.com/](ShowdownJS)
-[https://github.com/vkbansal/react-contextmenu](React Context Menu)
+[Muuri](https://paol-imi.github.io/muuri-react/)<br/>
+[Quill](https://quilljs.com/)<br/>
+[ShowdownJs](http://showdownjs.com/)<br/>
+[React Context Menu](https://github.com/vkbansal/react-contextmenu)
 
 ### Future Features
 
