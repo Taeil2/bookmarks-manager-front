@@ -1,4 +1,4 @@
-This is a bookmarks manager and new tab screen app for my Thinkful capstone project. It draws inspiration from Google's new tab screen as well as the iOS home screen.
+This is the front end for a bookmarks manager and new tab screen app. It draws inspiration from Google's new tab screen as well as the iOS home screen.
 
 Main features:
 - Manage bookmarks in a visual layout
@@ -15,7 +15,8 @@ React
 SASS
 
 ### Libraries
-[https://paol-imi.github.io/muuri-react/](Muuri)
+
+[https://paol-imi.github.io/muuri-react/](https://paol-imi.github.io/muuri-react/)
 [https://quilljs.com/](Quill)
 [http://showdownjs.com/](ShowdownJS)
 [https://github.com/vkbansal/react-contextmenu](React Context Menu)
