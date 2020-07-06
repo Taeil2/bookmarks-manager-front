@@ -4,6 +4,9 @@ import './features.scss';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+import screenshotImg from '../../../img/screenshot.png';
+import mobileScreenshotImg from '../../../img/mobile-screenshot.png';
+
 export default function Login() {
   // var settings = {
   //   dots: true,
@@ -14,9 +17,10 @@ export default function Login() {
   // };
 
   return (
-    <div>
+    <div className="screenshot-container">
       <h1>Your new bookmarks manager and new tab screen</h1>
-      <img src="" alt="screenshot"></img>
+      <img src={screenshotImg} alt="screenshot" className="screenshot"></img>
+      <img src={mobileScreenshotImg} alt="screenshot" className="mobile-screenshot"></img>
     </div>
     // <div className="slider-container">
     //   <Slider {...settings}>

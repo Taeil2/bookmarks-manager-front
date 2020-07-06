@@ -136,7 +136,8 @@ export default class LoginPage extends React.Component {
         this.setState({
           loginRegisterComponent: 'Login',
           registerSuccess: true,
-          registerFailure: false
+          registerFailure: false,
+          loginFailure: false
         });
       })
       .catch(res => {

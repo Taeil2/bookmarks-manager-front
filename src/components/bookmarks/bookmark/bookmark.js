@@ -42,8 +42,7 @@ export default class Bookmark extends React.Component {
 
     BookmarksApiService.addBookmark(drawerId, this.props.bookmark.name, this.props.bookmark.url, this.props.bookmark.base_url, bookmarkOrder)
       .then(result => {
-        this.handleRemove() // remove this bookmark
-        this.context.loadUserData();
+        this.handleRemove() // handleRemove resets the context
       });
   }
 
@@ -51,20 +50,22 @@ export default class Bookmark extends React.Component {
     // if on the page
     if (origin === 'page') {
       if (this.context.pages.length === 3) { // if there is only one page, move to that page (1 page is this page, 1 page is the drawer, 3rd page is the only page it can be moved to)
-        let bookmarkOrder;
-        let pageId;
-        let pageBookmarks = this.context.pageBookmarks.filter(bookmark => bookmark.folder_name === '');
-        bookmarkOrder = pageBookmarks.length + 1;
+        let movePage = this.context.pages.filter(page => page.id !== this.context.activePage && !page.is_drawer)[0];
+        let pageId = movePage.id;
 
-        pageId = this.context.activePage;
-
-        BookmarksApiService.addBookmark(pageId, this.props.bookmark.name, this.props.bookmark.url, this.props.bookmark.base_url, bookmarkOrder)
+        BookmarksApiService.getBookmarksByPage(pageId) // get the bookmarks on that page to determine the order
           .then(result => {
-            this.handleRemove() // remove this bookmark
-            this.context.loadUserData();
+            let movePageBookmarks = result;
+            let bookmarkOrder = movePageBookmarks.filter(bookmark => bookmark.folder_name === '').length + 1;
+
+            BookmarksApiService.addBookmark(pageId, this.props.bookmark.name, this.props.bookmark.url, this.props.bookmark.base_url, bookmarkOrder) // add the bookmark to that page
+              .then(result => {
+                this.handleRemove() // handleRemove resets the context
+              });
           });
       } else { // if there is more than one page, select the page
-
+        this.context.changeContext({moveObject: this.props.bookmark});
+        this.context.showModal('MoveForm');
       }
     }
 
@@ -80,46 +81,51 @@ export default class Bookmark extends React.Component {
 
         BookmarksApiService.addBookmark(pageId, this.props.bookmark.name, this.props.bookmark.url, this.props.bookmark.base_url, bookmarkOrder)
           .then(result => {
-            this.handleRemove() // remove this bookmark
-            this.context.loadUserData();
+            this.handleRemove() // handleRemove resets the context
           });
       } else { // if there are multiple pages, select the page
-
+        this.context.changeContext({moveObject: this.props.bookmark});
+        this.context.showModal('MoveForm');
       }
     }
   }
 
   handleMoveToFolder = (origin) => {
     // for page
-    if (origin === 'page' && this.context.pageBookmarks.filter(bookmark => bookmark.is_folder).length === 1) { // if there is one folder, move it to that folder
-      // find the folder, get the order within the folder, add the bookmark, remove this bookmark
-      let folder = this.context.pageBookmarks.filter(bookmark => bookmark.is_folder)[0];
-      let bookmarksInFolder = this.context.pageBookmarks.filter(bookmark => bookmark.folder_name === folder.name);
-      let bookmarkOrder = bookmarksInFolder.length + 1;
+    if (origin === 'page') {
+      if (this.context.pageBookmarks.filter(bookmark => bookmark.is_folder).length === 1) { // if there is one folder, move it to that folder
+        // find the folder, get the order within the folder, add the bookmark, remove this bookmark
+        let folder = this.context.pageBookmarks.filter(bookmark => bookmark.is_folder)[0];
+        let bookmarksInFolder = this.context.pageBookmarks.filter(bookmark => bookmark.folder_name === folder.name);
+        let bookmarkOrder = bookmarksInFolder.length + 1;
 
-      BookmarksApiService.addBookmark(this.props.bookmark.page_id, this.props.bookmark.name, this.props.bookmark.url, this.props.bookmark.base_url, bookmarkOrder, folder.name)
-      .then(result => {
-        this.handleRemove() // remove this bookmark
-        this.context.loadUserData();
-      });
-    } else { // show a list of folders
-
+        BookmarksApiService.addBookmark(this.props.bookmark.page_id, this.props.bookmark.name, this.props.bookmark.url, this.props.bookmark.base_url, bookmarkOrder, folder.name)
+        .then(result => {
+          this.handleRemove() // handleRemove resets the context
+        });
+      }
+      else { // show a list of folders
+        this.context.changeContext({moveObject: this.props.bookmark});
+        this.context.showModal('MoveForm');
+      }
     }
 
     // for drawer
-    if (origin === 'drawer' && this.context.drawerBookmarks.filter(bookmark => bookmark.is_folder).length === 1) { // if there is one folder, move it to that folder
-      // find the folder, get the order within the folder, add the bookmark, remove this bookmark
-      let folder = this.context.drawerBookmarks.filter(bookmark => bookmark.is_folder)[0];
-      let bookmarksInFolder = this.context.drawerBookmarks.filter(bookmark => bookmark.folder_name === folder.name);
-      let bookmarkOrder = bookmarksInFolder.length + 1;
+    if (origin === 'drawer') {
+      if (this.context.drawerBookmarks.filter(bookmark => bookmark.is_folder).length === 1) { // if there is one folder, move it to that folder
+        // find the folder, get the order within the folder, add the bookmark, remove this bookmark
+        let folder = this.context.drawerBookmarks.filter(bookmark => bookmark.is_folder)[0];
+        let bookmarksInFolder = this.context.drawerBookmarks.filter(bookmark => bookmark.folder_name === folder.name);
+        let bookmarkOrder = bookmarksInFolder.length + 1;
 
-      BookmarksApiService.addBookmark(this.props.bookmark.page_id, this.props.bookmark.name, this.props.bookmark.url, this.props.bookmark.base_url, bookmarkOrder, folder.name)
-      .then(result => {
-        this.handleRemove() // remove this bookmark
-        this.context.loadUserData();
-      });
-    } else { // show a list of folders
-
+        BookmarksApiService.addBookmark(this.props.bookmark.page_id, this.props.bookmark.name, this.props.bookmark.url, this.props.bookmark.base_url, bookmarkOrder, folder.name)
+        .then(result => {
+          this.handleRemove() // handleRemove resets the context
+        });
+      } else { // show a list of folders
+        this.context.changeContext({moveObject: this.props.bookmark});
+        this.context.showModal('MoveForm');
+      }
     }
   }
 
@@ -139,16 +145,16 @@ export default class Bookmark extends React.Component {
 
     BookmarksApiService.addBookmark(pageId, this.props.bookmark.name, this.props.bookmark.url, this.props.bookmark.base_url, bookmarkOrder)
       .then(result => {
-        // remove this bookmark
-        this.handleRemove()
         // remove bookmark from folder context
-        let newFolderBookmarks = this.context.folderBookmarks;
-        newFolderBookmarks.filter(bookmark => bookmark.id !== this.props.bookmark.id);
+        let newFolderBookmarks = this.context.folderBookmarks.filter(bookmark => bookmark.id !== this.props.bookmark.id);
+        if (newFolderBookmarks.length === 0) {
+          this.context.closeModal();
+        }
         this.context.changeContext({
           folderBookmarks: newFolderBookmarks
         });
-        // refresh data
-        this.context.loadUserData();
+        // remove this bookmark
+        this.handleRemove() // handleremove resets the context
       });
   }
 
@@ -215,38 +221,38 @@ export default class Bookmark extends React.Component {
     let groupOption;
     // any page bookmark can be moved to the drawer
     if (this.props.parent === 'page-bookmarks') {
-      moveToDrawerOption = <MenuItem onClick={this.handleMoveToDrawer}>Move to drawer</MenuItem>;
+      moveToDrawerOption = <MenuItem onClick={this.handleMoveToDrawer}>move to drawer</MenuItem>;
     }
     // any drawer bookmark can be moved to the page
     if (this.props.parent === 'drawer') {
-      moveToPageOption = <MenuItem onClick={(e) => this.handleMoveToPage('drawer')}>Move to page</MenuItem>;
+      moveToPageOption = <MenuItem onClick={(e) => this.handleMoveToPage('drawer')}>move to page</MenuItem>;
     }
     // any page bookmark can be moved to another page (or itself if its in a folder)
     if (this.props.parent === 'page-bookmarks' && this.context.settings.enable_pages && this.context.pages.length > 2) {
-      moveToPageOption = <MenuItem onClick={(e) => this.handleMoveToPage('page')}>Move to page</MenuItem>;
+      moveToPageOption = <MenuItem onClick={(e) => this.handleMoveToPage('page')}>move to page</MenuItem>;
     }
     // if the page or drawer has a folder and it's already not in a folder, it can be moved into a folder
     if (this.props.bookmark.folder_name === '') {
       if (this.props.parent === 'page-bookmarks' && this.context.pageBookmarks.filter(bookmark => bookmark.is_folder).length) {
-        moveToFolderOption = <MenuItem onClick={(e) => this.handleMoveToFolder('page')}>Move to folder</MenuItem>;
+        moveToFolderOption = <MenuItem onClick={(e) => this.handleMoveToFolder('page')}>move to folder</MenuItem>;
       }
       if (this.props.parent === 'drawer' && this.context.drawerBookmarks.filter(bookmark => bookmark.is_folder).length) {
-        moveToFolderOption = <MenuItem onClick={(e) => this.handleMoveToFolder('drawer')}>Move to folder</MenuItem>;
+        moveToFolderOption = <MenuItem onClick={(e) => this.handleMoveToFolder('drawer')}>move to folder</MenuItem>;
       }
     } else { // if the bookmark is in a folder, it can be moved out of the folder
-      moveOutOfFolderOption = <MenuItem onClick={(e) => this.handleMoveOutOfFolder('page')}>Move out of folder</MenuItem>;
+      moveOutOfFolderOption = <MenuItem onClick={(e) => this.handleMoveOutOfFolder('page')}>move out of folder</MenuItem>;
     }
 
     if (this.context.settings.enable_hiding === true) {
       if (!this.props.bookmark.hidden) {
-        hideOption = <MenuItem onClick={this.handleHide} className="hide-btn">Hide</MenuItem>;
+        hideOption = <MenuItem onClick={this.handleHide} className="hide-btn">hide</MenuItem>;
       } else {
-        hideOption = <MenuItem onClick={this.handleHide} className="hide-btn">Unhide</MenuItem>;
+        hideOption = <MenuItem onClick={this.handleHide} className="hide-btn">unhide</MenuItem>;
       }
 
     }
     if (this.context.settings.enable_groups === true) {
-      groupOption = <MenuItem onClick={this.handleGroup} classNAme="group-btn">Group</MenuItem>
+      groupOption = <MenuItem onClick={this.handleGroup} classNAme="group-btn">group</MenuItem>
     }
 
     let faviconHtml;
@@ -270,14 +276,14 @@ export default class Bookmark extends React.Component {
           </ContextMenuTrigger>
         </div>
         <ContextMenu id={'item-' + this.props.bookmark.id}>
-          <MenuItem onClick={this.handleEdit}>Edit</MenuItem>
+          <MenuItem onClick={this.handleEdit}>edit</MenuItem>
           {moveToPageOption}
           {moveToDrawerOption}
           {moveToFolderOption}
           {moveOutOfFolderOption}
           {hideOption}
           {groupOption}
-          <MenuItem onClick={this.handleRemove}>Remove</MenuItem>
+          <MenuItem onClick={this.handleRemove}>remove</MenuItem>
         </ContextMenu>
       </>
     );

@@ -8,7 +8,6 @@ export default class FolderContents extends React.Component {
   static contextType = AppContext;
 
   render() {
-    console.log(this.context.folderBookmarks);
     return (
       <div className="folder-contents-container">
         <Bookmarks parent="folder-contents" />

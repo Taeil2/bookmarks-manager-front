@@ -14,12 +14,6 @@ export default class Drawer extends React.Component {
   }
 
   render() {
-    let id = null;
-    let drawer = this.context.pages.filter((page) => page.is_drawer === true)[0];
-    if (drawer) {
-      id = drawer.id;
-    }
-
     return (
       <>
         <header>

@@ -65,10 +65,10 @@ export default class Folder extends React.Component {
     let hideOption;
     let groupOption;
     if (this.context.settings.enable_hiding === true) {
-      hideOption = <MenuItem data={{foo: 'bar'}} onClick={this.handleHide} className="hide-btn">Hide</MenuItem>;
+      hideOption = <MenuItem data={{foo: 'bar'}} onClick={this.handleHide} className="hide-btn">hide</MenuItem>;
     }
     if (this.context.settings.enable_groups === true) {
-      groupOption = <MenuItem data={{foo: 'bar'}} onClick={this.handleGroup} classNAme="group-btn">Group</MenuItem>
+      groupOption = <MenuItem data={{foo: 'bar'}} onClick={this.handleGroup} classNAme="group-btn">group</MenuItem>
     }
 
     return (
@@ -85,11 +85,11 @@ export default class Folder extends React.Component {
           </ContextMenuTrigger>
         </div>
         <ContextMenu id={'folder-' + this.props.folder.id}>
-          <MenuItem data={{foo: 'bar'}} onClick={this.handleRename}>Rename</MenuItem>
-          <MenuItem data={{foo: 'bar'}} onClick={this.handleMove}>Move</MenuItem>
+          <MenuItem data={{foo: 'bar'}} onClick={this.handleRename}>rename</MenuItem>
+          {/* <MenuItem data={{foo: 'bar'}} onClick={this.handleMove}>move</MenuItem> */}
           {hideOption}
           {groupOption}
-          <MenuItem data={{foo: 'bar'}} onClick={this.handleRemove}>Remove</MenuItem>
+          <MenuItem data={{foo: 'bar'}} onClick={this.handleRemove}>remove</MenuItem>
         </ContextMenu>
       </>
     );

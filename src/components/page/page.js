@@ -44,6 +44,7 @@ export default class Page extends React.Component {
       note: null,
       hidden: true,
       editObject: null,
+      moveObject: null
     };
   }
 
