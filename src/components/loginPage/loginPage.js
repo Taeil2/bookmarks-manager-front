@@ -22,7 +22,13 @@ export default class LoginPage extends React.Component {
       password: '',
       repeatPassword: '',
       error: null,
-      registerSuccess: false
+      registerSuccess: false,
+      registerFailure: false,
+      loginFailure: false,
+      hasUpper: false,
+      hasLower: false,
+      hasNumber: false,
+      hasSpecial: false,
     }
   }
 
@@ -33,12 +39,37 @@ export default class LoginPage extends React.Component {
 
   handleChange = (value, key) => {
     this.setState({[key]: value})
+    if (key === 'password') {
+      if (/[A-Z]/.test(value)) {
+        this.setState({hasUpper: true});
+      } else {
+        this.setState({hasUpper: false});
+      }
+      if (/[a-z]/.test(value)) {
+        this.setState({hasLower: true});
+      } else {
+        this.setState({hasLower: false});
+      }
+      if (/\d/.test(value)) {
+        this.setState({hasNumber: true});
+      } else {
+        this.setState({hasNumber: false});
+      }
+      if (/\W/.test(value)) {
+        this.setState({hasSpecial: true});
+      } else {
+        this.setState({hasSpecial: false});
+      }
+    }
   }
 
   handleLogin = (e) => {
     e.preventDefault();
 
-    this.setState({ error: null })
+    this.setState({
+      loginFailure: false,
+      error: null
+    });
 
     AuthApiService.postLogin({
       email: this.state.email,
@@ -54,20 +85,41 @@ export default class LoginPage extends React.Component {
       window.location.reload(false);
     })
     .catch(res => {
-      this.setState({ error: res.error })
+      this.setState({
+        loginFailure: true,
+        error: res.error
+      })
     })
   }
 
   handleRegister = (e) => {
     e.preventDefault();
-    this.setState({ error: null })
+    this.setState({
+        registerFailure: false,
+        error: null
+      });
 
     // check
     if (this.state.email === '' || this.state.password === '' || this.state.repeatPassword === '') {
-      console.log('fill all fields')
+      this.setState({
+        registerFailure: true,
+        error: 'All fields are required' }
+      );
+      return; // stop registration
     }
     if (!validator.validate(this.state.email)) {
-      console.log('not a valid email');
+      this.setState({
+        registerFailure: true,
+        error: 'Email is not valid'
+      });
+      return; // stop registration
+    }
+    if (this.state.password !== this.state.repeatPassword) {
+      this.setState({
+        registerFailure: true,
+        error: 'Passwords do not match'
+      });
+      return; // stop registration
     }
 
     AuthApiService.postUser({
@@ -83,11 +135,15 @@ export default class LoginPage extends React.Component {
         // this.props.onRegistrationSuccess()
         this.setState({
           loginRegisterComponent: 'Login',
-          registerSuccess: true
+          registerSuccess: true,
+          registerFailure: false
         });
       })
       .catch(res => {
-        this.setState({ error: res.error })
+        this.setState({
+          registerFailure: true,
+          error: res.error
+        })
       })
   }
 

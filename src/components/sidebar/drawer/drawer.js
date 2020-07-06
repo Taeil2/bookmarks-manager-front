@@ -24,10 +24,10 @@ export default class Drawer extends React.Component {
       <>
         <header>
           <h2><i className="fas fa-th-large"></i> Drawer</h2>
-          <button className="icon-btn drawer-add" onClick={(e) => this.handleClick()}><i className="fas fa-plus"></i></button>
+          <button className="icon-btn drawer-add" onClick={(e) => this.handleClick()}><i className="fas fa-plus"></i> Add</button>
           <button className="close-sidebar icon-btn" onClick={(e) => this.context.closeSidebar(e)}><i className="fas fa-times"></i></button>
         </header>
-        <Bookmarks parent="drawer" id={id} />
+        <Bookmarks parent="drawer" />
       </>
     );
   }

@@ -76,7 +76,7 @@ button, .btn {
 }
 .icon-btn {
   background: #fff;
-  border: 1px solid #ccc;
+  border: 1px solid $light-gray;
   font-size: 24px;
   color: #9E9E9E;
   border-radius: 0;
@@ -152,7 +152,7 @@ input {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: $light-gray;
   transition: 250ms ease-out;
   border-radius: 34px;
 }

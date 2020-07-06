@@ -4,6 +4,7 @@ import AppContext from '../../appContext';
 
 import AddForm from './addForm/addForm';
 import EditForm from './editForm/editForm';
+import MoveForm from './moveForm/moveForm';
 import FolderContents from './folderContents/folderContents';
 
 export default class Modal extends React.Component {
@@ -23,6 +24,9 @@ export default class Modal extends React.Component {
         break;
       case 'EditForm':
         modalComponent = <EditForm />;
+        break;
+      case 'MoveForm':
+        modalComponent = <MoveForm />;
         break;
       case 'FolderContents':
         modalComponent = <FolderContents />;

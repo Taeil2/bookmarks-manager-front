@@ -143,7 +143,7 @@ export default class Settings extends React.Component {
               <div>
                 <div className="btn-group">
                   <button onClick={() => this.handleSettingChange('icon_shape', 'square')} className={icon_shape_square} >square</button>
-                  <button onClick={() => this.handleSettingChange('icon_shape', 'square')} className={icon_shape_rounded} >rounded</button>
+                  <button onClick={() => this.handleSettingChange('icon_shape', 'rounded')} className={icon_shape_rounded} >rounded</button>
                   <button onClick={() => this.handleSettingChange('icon_shape', 'circle')} className={icon_shape_circle} >circle</button>
                 </div>
               </div>

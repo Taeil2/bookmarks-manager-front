@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .modal-container { // for the modal
   position: fixed;
   z-index: 30;
@@ -19,9 +21,10 @@
   max-height: calc(100vh - 30px);
   overflow-y: auto;
   padding: 20px;
-  border: 1px solid black;
+  border: 1px solid $dark-gray;
   background: #fff;
   align-self: center;
+  box-shadow: $box-shadow;
   .close-modal {
     position: absolute;
     top: 0;

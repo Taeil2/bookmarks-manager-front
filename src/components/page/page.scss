@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .page {
   min-height: 100vh;
   display: flex;
@@ -25,12 +27,35 @@
     padding: 0 70px;
   }
 }
-
-
 .page-buttons {
   display: flex;
   justify-content: space-between;
   > :only-child {
     margin: 0 auto;
+  }
+}
+
+.logout-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 18px;
+  padding: 15px;
+  color: $light-gray;
+  font-size: 14px;
+  i {
+    font-size: 12px;
+    margin-right: 5px;
+  }
+  &:hover {
+    color: $purple;
+    opacity: 0.75;
+  }
+}
+@media (min-width: 800px) {
+  .logout-link {
+    top: 10px;
+    right: 20px;
+
   }
 }
