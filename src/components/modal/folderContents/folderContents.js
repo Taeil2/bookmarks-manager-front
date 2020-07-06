@@ -7,18 +7,11 @@ import Bookmarks from '../../bookmarks/bookmarks';
 export default class FolderContents extends React.Component {
   static contextType = AppContext;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      url: ''
-    }
-  }
-
   render() {
+    console.log(this.context.folderBookmarks);
     return (
       <div className="folder-contents-container">
-        <Bookmarks parent="folder-contents" id={1} />
+        <Bookmarks parent="folder-contents" />
         <button className="close-modal icon-btn" onClick={(e) => this.context.closeModal()}><i className="fas fa-times"></i></button>
       </div>
     );

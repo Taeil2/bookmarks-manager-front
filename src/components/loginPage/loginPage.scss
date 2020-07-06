@@ -25,7 +25,7 @@
   .login-box, .registration-box {
     width: 350px;
     margin: 0 auto;
-    border: 1px solid black;
+    border: 1px solid $dark-gray;
     padding: 20px;
     label, input {
       display: block;
@@ -44,13 +44,19 @@
       text-align: center;
     }
   }
-  .register-success {
-    background: $green;
+  .success, .failure {
+    background: $gray;
     color: #fff;
     padding: 8px 5px;
     border-radius: 5px;
     text-align: center;
-    margin-bottom: 15px;
+    margin-top: 15px;
+  }
+  .success {
+    background: $green;
+  }
+  .failure {
+    background: $red;
   }
 }
 
@@ -71,6 +77,34 @@
     }
     .login-box, .registration-box {
       align-self: center;
+    }
+  }
+}
+
+/*------------------
+  Register
+------------------*/
+.requirements {
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  flex-wrap: wrap;
+  margin-top: -10px;
+  li {
+    width: 125px;
+    color: $gray;
+    font-size: 14px;
+    line-height: 1.4em;
+    i {
+      font-size: 12px;
+      margin-right: 3px;
+      color: $light-gray;
+    }
+    &.met-true {
+      color: $dark-green;
+      i {
+        color: $green;
+      }
     }
   }
 }

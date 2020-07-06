@@ -1,28 +1,24 @@
 import React from 'react';
-import './editForm.scss';
+import './moveForm.scss';
 import AppContext from '../../../appContext';
 import BookmarksApiService from '../../../services/bookmarks-api-service';
 import BookmarkImagesApiService from '../../../services/bookmark-images-api-service';
 
-export default class EditForm extends React.Component {
+export default class MoveForm extends React.Component {
   static contextType = AppContext;
 
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      url: ''
     }
   }
 
   componentDidMount() {
     this.setState({
-      name: this.context.editObject.name,
-      url: this.context.editObject.url
     });
   }
 
-  handleChange(value, key) {
+  handleSelect(value, key) {
     this.setState({[key]: value})
   }
 
@@ -95,37 +91,22 @@ export default class EditForm extends React.Component {
   }
 
   render() {
-    console.log('edit object', this.context.editObject);
+    // pages
+    // folders
+    // drawer
 
-    let formTitle;
-    let urlHidden;
-    let submitText;
-
-    if (this.context.editObject.is_folder) {
-      formTitle = 'Rename folder';
-      urlHidden = 'hidden';
-      submitText = 'Rename';
-    } else {
-      formTitle = 'Edit site';
-      submitText = 'Edit';
-    }
+    console.log()
 
     return (
       <form onSubmit={(e) => this.handleSubmit(e)}>
-        <h3>{formTitle}</h3>
+        <h3>Move</h3>
         <div>
-          <label htmlFor="name">Name</label>
-          <input type="text" id="name" value={this.state.name} onChange={e => this.handleChange(e.target.value, 'name')}></input>
-        </div>
-        <div className={urlHidden}>
-          <label htmlFor="url">Url</label>
-          <input type="text" id="url" value={this.state.url} onChange={e => this.handleChange(e.target.value, 'url')}></input>
+
         </div>
         <div>
-          <button type="submit">{submitText}</button>
+          <button type="submit">Move</button>
           <button className="secondary" onClick={this.context.closeModal}>Cancel</button>
         </div>
-        <div id="results"></div>
       </form>
     );
   }

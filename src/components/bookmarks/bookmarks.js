@@ -1,7 +1,7 @@
 import React from 'react';
 import './bookmarks.scss';
-import Muuri from 'muuri';
 import AppContext from '../../appContext';
+import {MuuriComponent} from 'muuri-react';
 
 import Bookmark from './bookmark/bookmark';
 import Folder from './folder/folder';
@@ -9,65 +9,26 @@ import Folder from './folder/folder';
 export default class Bookmarks extends React.Component {
   static contextType = AppContext;
 
-  componentDidUpdate() {
-    console.log('componentdidupdate');
-
-    // Triggering a resize causes Muuri to refresh its layout
-    window.dispatchEvent(new Event('resize'));
-
-    // init the muuri
-    if (!this.context.pageBookmarksLoaded) {
-      if (this.context.pageBookmarks.length > 0) {
-        this.initMuuri();
-        this.context.changeContext({pageBookmarksLoaded: true})
-      }
-    }
-
-    // init the muuri
-    if (!this.context.drawerBookmarksLoaded) {
-      if (this.context.drawerBookmarks.length > 0) {
-        this.initMuuri();
-        this.context.changeContext({drawerBookmarksLoaded: true})
-      }
-    }
-  }
-
-  initMuuri = () => {
-    let muuriClass = `.${this.props.parent}-${this.props.id}`;
-    let newMuuri = new Muuri(muuriClass, {
-      items: '.draggable',
+  constructor(props){
+    super(props);
+    this.muuriOptions = {
       dragEnabled: true,
       dragStartPredicate: {
         distance: 10,
         delay: 0
-      },
-      layout: {
-        // alignRight: true
-      },
-      dragSort: this.getAllGrids,
-    });
-
-    // Set drag start and end events to disable other click events while dragging
-    newMuuri.on('dragInit', (item, event) => {
-      this.context.changeContext({dragging: true});
-    });
-
-    newMuuri.on('dragReleaseEnd', (item, event) => {
-      this.context.changeContext({dragging: false});
-    });
-
-    if (this.props.parent === 'page-bookmarks') {
-      this.context.changeContext({pageMuuri: newMuuri});
-    }
-    if (this.props.parent === 'drawer') {
-      this.context.setDrawerMuuri(newMuuri);
-      // not sure why this is breaking
-      // this.context.changeContext({drawerMuuri: newMuuri});
+      }
+      // dragStartPredicate: function(item, e) {
+      //   if (item._element.classList.contains('draggable')) {
+      //     return true;
+      //   }
+      // },
+      // dragContainer: document.body,
     }
   }
 
-  getAllGrids = () => {
-    return [this.context.drawerMuuri, this.context.pageMuuri];
+  componentDidUpdate() {
+    // Triggering a resize causes Muuri to refresh its layout
+    window.dispatchEvent(new Event('resize'));
   }
 
   handleAddClick = (e) => {
@@ -80,6 +41,18 @@ export default class Bookmarks extends React.Component {
   render() {
     let bookmarks = [];
 
+    // hidden filters
+    if (this.context.hidden) {
+      this.muuriOptions.filter = function(a, b) {
+        return b.getElement().classList.contains('hidden-false');
+      };
+    } else {
+      this.muuriOptions.filter = function(a, b) {
+        return b.getElement().classList.contains('muuri-item');
+      };
+    }
+
+    // get the right bookmarks for the right parent
     if (this.props.parent === 'page-bookmarks') {
       // get bookmarks for the page (not in a folder)
       let screenBookmarks = this.context.pageBookmarks.filter(bookmark => bookmark.folder_name === '');
@@ -90,14 +63,11 @@ export default class Bookmarks extends React.Component {
       })
       for (let i = 0; i < screenBookmarks.length; i++) {
         if (!screenBookmarks[i].is_folder) {
-          bookmarks.push(<Bookmark bookmark={screenBookmarks[i]} parent={this.props.parent} number={this.context.activePage} key={i} />);
+          bookmarks.push(<Bookmark bookmark={screenBookmarks[i]} parent={this.props.parent} key={i} />);
         } else {
-          bookmarks.push(<Folder folder={screenBookmarks[i]} parent={this.props.parent} number={this.context.activePage} key={i} />)
+          bookmarks.push(<Folder folder={screenBookmarks[i]} parent={this.props.parent} key={i} />)
         }
       }
-
-      // get bookmarks for each folder
-
     }
     if (this.props.parent === 'drawer') {
       // get bookmarks for the page (not in a folder)
@@ -114,20 +84,31 @@ export default class Bookmarks extends React.Component {
           bookmarks.push(<Folder folder={drawerBookmarks[i]} parent={this.props.parent} number={this.context.activePage} key={i} />)
         }
       }
-
-      // get bookmarks for each folder
-
-
+    }
+    if (this.props.parent === 'folder-contents') {
+      // get bookmarks for the page (not in a folder)
+      let folderBookmarks = this.context.folderBookmarks;
+      folderBookmarks.sort((a, b) => {
+        if (a.bookmark_order < b.bookmark_order) { return -1; }
+        if (b.bookmark_order > a.bookmark_order) { return 1; }
+        return 0;
+      })
+      for (let i = 0; i < folderBookmarks.length; i++) {
+        // everything in a folder is a bookmark (no folders allowed)
+        bookmarks.push(<Bookmark bookmark={folderBookmarks[i]} parent={this.props.parent} number={this.context.activePage} key={i} />);
+      }
     }
 
     return (
       <>
-        <section className={'bookmarks ' + this.props.parent + ' ' + this.props.parent + '-' + this.props.id + ' ' + this.context.settings.icon_size + ' ' + this.context.settings.icon_shape + ' per-row-' + this.context.settings.icons_per_row}>
-          {bookmarks}
-          <button className="bookmark add draggable hidden-false" onClick={(e) => this.handleAddClick(e)}>
-            <div className="bookmark-image icon-btn"><i className="fas fa-plus"></i></div>
-            <p>Add</p>
-          </button>
+        <section className={'bookmarks ' + this.props.parent + ' ' + this.context.settings.icon_size + ' ' + this.context.settings.icon_shape + ' per-row-' + this.context.settings.icons_per_row + ' qty-' + bookmarks.length + ' important'}>
+          <MuuriComponent {...this.muuriOptions}>
+            {bookmarks}
+            <button className="bookmark add hidden-false" onClick={(e) => this.handleAddClick(e)}>
+              <div className="bookmark-image icon-btn"><i className="fas fa-plus"></i></div>
+              <p>Add</p>
+            </button>
+          </MuuriComponent>
         </section>
       </>
     );

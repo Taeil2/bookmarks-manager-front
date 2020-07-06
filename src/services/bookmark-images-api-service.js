@@ -1,34 +1,38 @@
 import TokenService from '../services/token-service';
 import config from '../config';
 
-const PagesApiService = {
-  getPages() {
-    return fetch(`${config.API_ENDPOINT}/pages`, {
-      headers: {
-        'authorization': `bearer ${TokenService.getAuthToken()}`,
-      },
-    })
+const BookmarkImagesApiService = {
+  getBookmarkImagesByUrl(base_url) {
+    var url = new URL(`${config.API_ENDPOINT}/bookmark-images`);
+    var params = {base_url: base_url};
+    url.search = new URLSearchParams(params).toString();
+
+    return fetch(url, {
+        headers: {
+          'authorization': `bearer ${TokenService.getAuthToken()}`,
+        },
+      })
       .then(res =>
         (!res.ok)
           ? res.json().then(e => Promise.reject(e))
           : res.json()
       )
   },
-  createPage(name, page_order) {
-    return fetch(`${config.API_ENDPOINT}/pages`, {
+  insertBookmarkImages(bookmarkImagesObject) {
+    return fetch(`${config.API_ENDPOINT}/bookmark-images`, {
       method: 'POST',
       headers: {
         'authorization': `bearer ${TokenService.getAuthToken()}`,
         'content-type': 'application/json',
       },
-      body: JSON.stringify({name, page_order})
+      body: JSON.stringify(bookmarkImagesObject)
     })
       .then(res =>
         (!res.ok)
           ? res.json().then(e => Promise.reject(e))
           : res.json()
       )
-  },
+  }
 }
 
-export default PagesApiService
+export default BookmarkImagesApiService

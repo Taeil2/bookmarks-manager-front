@@ -1,6 +1,16 @@
-.drawer-add {
-  margin-left: 15px;
+@import '../../../variables.scss';
+
+.sidebar .drawer-add {
+  font-size: 14px;
+  margin-left: 20px;
   margin-top: -8px;
-  font-size: 18px !important;
-  padding: 7px 9px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: $gray;
+  i {
+    font-size: 12px;
+    vertical-align: top;
+    margin-top: 1px;
+    margin-right: 3px;
+  }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import './folder.scss';
 import AppContext from '../../../appContext';
+import BookmarksApiService from '../../../services/bookmarks-api-service';
 
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 
@@ -9,6 +10,13 @@ export default class Folder extends React.Component {
 
   handleFolderClick = (e) => {
     if (!this.context.dragging) {
+      if (this.props.parent === 'page-bookmarks') {
+        let folderBookmarks = this.context.pageBookmarks.filter(bookmark => bookmark.folder_name === this.props.folder.name);
+        this.context.changeContext({ folderBookmarks: folderBookmarks });
+      } else {
+        let folderBookmarks = this.context.drawerBookmarks.filter(bookmark => bookmark.folder_name === this.props.folder.name);
+        this.context.changeContext({ folderBookmarks: folderBookmarks });
+      }
       this.context.showModal('FolderContents');
     }
   }
@@ -18,12 +26,20 @@ export default class Folder extends React.Component {
     this.context.showModal('EditForm');
   }
 
-  handleMove = (e) => {
+  handleMoveToDrawer = (e) => {
+
+  }
+
+  handleMoveToPage = (e) => {
 
   }
 
   handleHide = (e) => {
-
+    let folder = this.props.folder;
+    BookmarksApiService.editBookmark(folder.id, folder.page_id, folder.name, folder.url, folder.base_url, folder.bookmark_order, folder.folder_name, folder.group_name, !folder.hidden)
+      .then(result => {
+        this.context.loadUserData();
+      });
   }
 
   handleGroup = (e) => {
@@ -31,10 +47,11 @@ export default class Folder extends React.Component {
   }
 
   handleRemove = (e) => {
-
+    BookmarksApiService.deleteBookmark(this.props.folder.id)
+      .then(result => {
+        this.context.loadUserData();
+      });
   }
-
-
 
   render() {
     let contextTrigger = null;
@@ -56,11 +73,11 @@ export default class Folder extends React.Component {
 
     return (
       <>
-        <div className="draggable hidden-false">
+        <div className={'draggable hidden-' + this.props.folder.hidden}>
           <ContextMenuTrigger id={'folder-' + this.props.folder.id} ref={(c) => contextTrigger = c}>
             <div className="bookmark folder"  onClick={(e) => this.handleFolderClick(e) }>
               <div className="bookmark-image">
-                {/* <img src="https://www.google.com/images/branding/product_ios/3x/gsa_ios_60dp.png"></img> */}
+                <div className="placeholder"></div>
               </div>
               <p>{this.props.folder.name}</p>
               <div className="context-menu-icon" onClick={toggleMenu}><i className="fas fa-ellipsis-v"></i></div>

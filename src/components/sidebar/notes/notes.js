@@ -2,6 +2,7 @@ import React from 'react';
 import './notes.scss';
 import AppContext from '../../../appContext';
 import UsersService from '../../../services/users-api-service'
+import ReactHtmlParser from 'react-html-parser';
 
 import Quill from 'quill';
 import 'quill/dist/quill.core.css';
@@ -15,30 +16,36 @@ export default class Notes extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      initialNote: null,
       converter: null
     }
+    this.typingTimer = null;
+    this.quill = undefined;
   }
 
   componentDidMount() {
-    let quill = new Quill('#quill-editor', {
-      modules: {
-        toolbar: [
-          [ {'header': 1}, { 'header': 2}],
-          ['bold', 'italic', 'underline'], // 'strike'
-          [{'list': 'ordered'}, {'list': 'bullet'}, {'list': 'check'} ],
-          ['link', 'image', 'video'], // 'blockquote', 'code-block'
-        ]
-      },
-      placeholder: 'Write here',
-      theme: 'snow',
-      // theme: 'bubble',
-    });
-
     var showdownConverter = new showdown.Converter();
+    this.setState({initialNote: showdownConverter.makeHtml(this.context.initialNote)});
     this.setState({converter: showdownConverter});
   }
 
-
+  componentDidUpdate() {
+    if (!this.quill) {
+      this.quill = new Quill('#quill-editor', {
+        modules: {
+          toolbar: [
+            [ {'header': 1}, { 'header': 2}],
+            ['bold', 'italic', 'underline'], // 'strike'
+            [{'list': 'ordered'}, {'list': 'bullet'}, {'list': 'check'} ],
+            ['link', 'image', 'video'], // 'blockquote', 'code-block'
+          ]
+        },
+        placeholder: 'Write here',
+        theme: 'snow',
+        // theme: 'bubble',
+      });
+    }
+  }
 
   componentWillUnmount() {
     document.getElementsByClassName('ql-toolbar')[0].remove();
@@ -54,16 +61,20 @@ export default class Notes extends React.Component {
       markdown += tagMarkdown;
     }
     this.context.changeContext({note: markdown});
-    console.log(markdown);
-    // UsersService.updateUser({note: markdown});
+
+    clearTimeout(this.typingTimer);
+    this.typingTimer = setTimeout(this.saveNote, 3000)
+  }
+
+  saveNote = () => {
+    console.log('saving note');
+    UsersService.updateUser({note: this.context.note})
   }
 
   render() {
-    let noteHtml;
-    if (this.context.note !== null) {
-      noteHtml = this.state.converter.makeHtml(this.context.note);
-    }
-    // console.log(noteHtml);
+    let initialNotesHtml = ReactHtmlParser(this.state.initialNote);
+    console.log(initialNotesHtml);
+    // console.log(typeof html);
 
     return (
       <>
@@ -72,7 +83,9 @@ export default class Notes extends React.Component {
           <button className="close-sidebar icon-btn" onClick={(e) => this.context.closeSidebar(e)}><i className="fas fa-times"></i></button>
         </header>
         <div id="quill-editor" onKeyPress={this.handleKeyPress}>
-
+          {initialNotesHtml}
+          {/* <h1>Header</h1>
+          <p>This is a paragraph. <strong>BOLD</strong></p> */}
         </div>
       </>
     );

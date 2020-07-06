@@ -3,14 +3,8 @@ import React from 'react';
 
 export default class Login extends React.Component {
   render() {
-    let registerSuccess;
-    if (this.props.registerSuccess) {
-      registerSuccess = <div className="register-success">Registration complete! Login now.</div>
-    }
-
     return (
       <div className="login-box">
-        {registerSuccess}
         <h4>Login</h4>
         <form onSubmit={(e) => this.props.handleLogin(e)}>
           <label htmlFor="email">Email</label>
@@ -19,6 +13,12 @@ export default class Login extends React.Component {
           <input type="password" id="password" value={this.props.vars.password}  onChange={e => this.props.handleChange(e.target.value, 'password')} />
           {/* <div><a href="/" className="forgot-password-button"><small>Forgot password?</small></a></div> */}
           <button type="submit">Login</button>
+          {this.props.vars.loginFailure &&
+            <div className="failure">{this.props.vars.error}</div>
+          }
+          {this.props.vars.registerSuccess &&
+            <div className="success">Registration complete! Login now.</div>
+          }
         </form>
         <p>Have an account? <a href="/" onClick={(e) => this.props.updateComponent(e, 'Register')}>Register</a></p>
       </div>

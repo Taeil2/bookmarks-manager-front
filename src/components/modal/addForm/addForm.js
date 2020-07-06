@@ -2,6 +2,7 @@ import React from 'react';
 import './addForm.scss';
 import AppContext from '../../../appContext';
 import BookmarksApiService from '../../../services/bookmarks-api-service';
+import BookmarkImagesApiService from '../../../services/bookmark-images-api-service';
 
 export default class AddForm extends React.Component {
   static contextType = AppContext;
@@ -53,19 +54,10 @@ export default class AddForm extends React.Component {
     }
 
     // Add the folder
-    BookmarksApiService.addBookmark(this.context.addOrigin, this.state.name, null, null, bookmarkOrder, true)
+    BookmarksApiService.addBookmark(this.context.addOrigin, this.state.name, null, null, bookmarkOrder, null, null, true)
       .then(result => {
         this.context.closeModal();
-        // add it to the page
-        if (pageOrDrawer === 'page') { // adding to page
-          let newPageBookmarks = this.context.pageBookmarks;
-          newPageBookmarks[bookmarkOrder - 1] = result;
-          this.context.changeContext({pageBookmarks: newPageBookmarks});
-        } else { // adding to drawer
-          let newDrawerBookmarks = this.context.drawerBookmarks;
-          newDrawerBookmarks[bookmarkOrder - 1] = result;
-          this.context.changeContext({drawerBookmarks: newDrawerBookmarks});
-        }
+        this.context.loadUserData();
       });
   }
 
@@ -78,11 +70,7 @@ export default class AddForm extends React.Component {
     }
 
     let normalizedUrl = this.normalizeUrl(this.state.url);
-
-    // get favicons
-    fetch(`https://besticon-favicon-finder.herokuapp.com/allicons.json?url=${normalizedUrl}`)
-      .then(res => res.json())
-      .then(data => console.log(data));
+    let baseUrl = this.getBaseUrl(normalizedUrl);
 
     // find the order
     let bookmarkOrder;
@@ -95,20 +83,30 @@ export default class AddForm extends React.Component {
     }
 
     // add the bookmark
-    BookmarksApiService.addBookmark(this.context.addOrigin, this.state.name, normalizedUrl, this.getBaseUrl(normalizedUrl), bookmarkOrder)
+    BookmarksApiService.addBookmark(this.context.addOrigin, this.state.name, normalizedUrl, baseUrl, bookmarkOrder)
       .then(result => {
         this.context.closeModal();
-        // add it to the page
-        if (pageOrDrawer === 'page') { // adding to page
-          let newPageBookmarks = this.context.pageBookmarks;
-          newPageBookmarks[bookmarkOrder - 1] = result;
-          this.context.changeContext({pageBookmarks: newPageBookmarks});
-        } else { // adding to drawer
-          let newDrawerBookmarks = this.context.drawerBookmarks;
-          newDrawerBookmarks[bookmarkOrder - 1] = result;
-          this.context.changeContext({drawerBookmarks: newDrawerBookmarks});
-        }
+        this.context.loadUserData();
       });
+
+    // check if favicon exists
+    BookmarkImagesApiService.getBookmarkImagesByUrl(baseUrl)
+      .then(result => {
+        if (result.length) {
+          // if it already has images, do nothing
+        } else {
+          // get favicons and add them to database
+          fetch(`https://besticon-favicon-finder.herokuapp.com/allicons.json?url=${baseUrl}`)
+          .then(res => res.json())
+          .then(data => {
+            BookmarkImagesApiService.insertBookmarkImages(data)
+            .then(result => {
+              console.log(result);
+              this.context.loadUserData();
+            })
+          });
+        }
+      })
   }
 
   changeContext = (contextUpdate) => {
@@ -126,10 +124,10 @@ export default class AddForm extends React.Component {
 
   getBaseUrl = (url) => {
     var pathArray = url.split( '/' );
-    var protocol = pathArray[0];
+    // var protocol = pathArray[0];
     var host = pathArray[2];
-    var baseUrl = protocol + '//' + host;
-    return baseUrl;
+    // var baseUrl = protocol + '//' + host;
+    return host;
   }
 
   render() {
