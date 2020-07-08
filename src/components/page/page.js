@@ -129,6 +129,7 @@ export default class Page extends React.Component {
   getBookmarks = () => {
     BookmarksApiService.getBookmarksByPage(this.state.activePage)
       .then(result => {
+
         this.setState({
           pageBookmarks: result,
           pageLoaded: true
