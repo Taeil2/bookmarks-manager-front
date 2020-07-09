@@ -262,6 +262,16 @@ button.secondary, .btn.secondary {
   // background: rgba(255, 255, 255, 0.75);
 }
 .btn-group-line button.active, .btn-group-line .btn.active {
-  // color: $light-purple;
-  // border-bottom-color: $light-purple;
+  color: #fff;
+  border-bottom-color: #fff;
+}
+.react-contextmenu-item {
+  color: $dark-gray;
+}
+.modal .btn-group-line button, .btn-group-line .btn {
+  color: $dark-gray;
+}
+.modal .btn-group-line button.active, .modal .btn-group-line .btn.active {
+  color: $purple;
+  border-bottom-color: $purple;
 }
