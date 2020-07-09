@@ -164,20 +164,22 @@ export default class Page extends React.Component {
         this.photographer = json.user.name;
         this.photographerUrl = json.user.links.html;
         this.backgroundImage = json.links.html;
+
+        console.log(this.photographerUrl, this.backgroundImage);
         // this.checkImageProperties(json.urls.regular);
       });
 
     // random photo
-    fetch('https://api.unsplash.com/photos/random/?featured=true&orientation=landscape&client_id=CukhwVBuro-F3PuSK0t1q4IXLZCpDhtHc5uQVPRpFr4')
-      .then(response => response.json())
-      .then(json => {
-        console.log(json);
-        document.body.style.backgroundImage = `url('${json.urls.regular}')`;
-        this.photographer = json.user.name;
-        this.photographerUrl = json.user.links.html;
-        this.backgroundImage = json.links.html;
-        // this.checkImageProperties(json.urls.regular);
-      });
+    // fetch('https://api.unsplash.com/photos/random/?featured=true&orientation=landscape&client_id=CukhwVBuro-F3PuSK0t1q4IXLZCpDhtHc5uQVPRpFr4')
+    //   .then(response => response.json())
+    //   .then(json => {
+    //     console.log(json);
+    //     document.body.style.backgroundImage = `url('${json.urls.regular}')`;
+    //     this.photographer = json.user.name;
+    //     this.photographerUrl = json.user.links.html;
+    //     this.backgroundImage = json.links.html;
+    //     // this.checkImageProperties(json.urls.regular);
+    //   });
   }
 
   checkImageProperties = (url) => {
@@ -237,12 +239,12 @@ export default class Page extends React.Component {
       <AppContext.Provider value={contextValue}>
         <main className="page">
           <Link to='/' onClick={this.handleLogoutClick} className="logout-link" title="Logout"><i className="fas fa-sign-out-alt"></i> Log out</Link>
-          <div class="unsplash-attribution">
+          <div className="unsplash-attribution">
             Photo&nbsp;
             {this.photographer !== '' &&
-              <>by <a href={this.photographerLink}  rel="noopener noreferrer">{this.photographer}</a><br /></>
+              <>by <a href={this.photographerUrl} target="_blank" rel="noopener noreferrer">{this.photographer}</a> <br /></>
             }
-            on <a href={this.backgroundUrl} target="_blank" rel="noopener noreferrer">Unsplash</a>
+            on <a href={this.backgroundImage} target="_blank" rel="noopener noreferrer">Unsplash</a>
           </div>
           <div className="wrapper">
             <SearchBar />
