@@ -13,8 +13,6 @@ export default class Demo extends React.Component {
   }
 
   handleLogin = (e) => {
-    e.preventDefault();
-
     AuthApiService.postLogin({
       email: 'demo@demo.com',
       password: 'Demo123!'

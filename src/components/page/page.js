@@ -156,7 +156,18 @@ export default class Page extends React.Component {
   }
 
   getBackgroundImage = () => {
-    console.log('getting')
+    fetch('https://api.unsplash.com/photos/Gf_KqXHU-PY/?client_id=CukhwVBuro-F3PuSK0t1q4IXLZCpDhtHc5uQVPRpFr4')
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        document.body.style.backgroundImage = `url('${json.urls.regular}')`;
+        this.photographer = json.user.name;
+        this.photographerUrl = json.user.links.html;
+        this.backgroundImage = json.links.html;
+        // this.checkImageProperties(json.urls.regular);
+      });
+
+    // random photo
     fetch('https://api.unsplash.com/photos/random/?featured=true&orientation=landscape&client_id=CukhwVBuro-F3PuSK0t1q4IXLZCpDhtHc5uQVPRpFr4')
       .then(response => response.json())
       .then(json => {
