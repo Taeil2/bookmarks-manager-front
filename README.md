@@ -20,8 +20,10 @@ SASS
 [ShowdownJs](http://showdownjs.com/)<br/>
 [React Context Menu](https://github.com/vkbansal/react-contextmenu)
 
-### Future Features
+### Screenshot
+https://bookmarks-manager-front.vercel.app/static/media/screenshot.73073303.png
 
+### Future Features
 - Redesigned home sceen
 - Drag and drop between page and drawer
 - Drag and drop into folders

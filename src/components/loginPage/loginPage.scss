@@ -3,6 +3,90 @@
 /*------------------
   Login
 ------------------*/
+
+// Layout
+.login-page, .login-page .wrapper {
+  min-height: 100vh;
+}
+
+.login-page {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 600px) {
+  .login-page {
+
+  }
+}
+
+@media (min-width: 800px) {
+  .login-page {
+    .wrapper {
+      flex-direction: row;
+    }
+    .features {
+      width: calc(100% - 400px);
+    }
+    .login {
+
+      display: flex;
+      align-items: center;
+    }
+    .features, .login {
+
+    }
+  }
+}
+
+// Slider
+
+
+
+
+
+// Login Box
+.login-box, .registration-box {
+  width: 340px;
+  margin: 0 auto;
+  border: 1px solid $dark-gray;
+  padding: 20px;
+  label, input {
+    display: block;
+  }
+  input {
+    width: 100%;
+  }
+  .forgot-password-button {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: -10px;
+    margin-bottom: 1em;
+  }
+  .btn {
+    display: block;
+    text-align: center;
+  }
+  .success, .failure {
+    background: $gray;
+    color: #fff;
+    padding: 8px 5px;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 15px;
+  }
+  .success {
+    background: $green;
+  }
+  .failure {
+    background: $red;
+  }
+}
+
+
+/*
 .login-page {
   .wrapper {
     display: flex;
@@ -22,64 +106,30 @@
       text-align: center;
     }
   }
-  .login-box, .registration-box {
-    width: 340px;
-    margin: 0 auto;
-    border: 1px solid $dark-gray;
-    padding: 20px;
-    label, input {
-      display: block;
-    }
-    input {
-      width: 100%;
-    }
-    .forgot-password-button {
-      display: inline-block;
-      vertical-align: top;
-      margin-top: -10px;
-      margin-bottom: 1em;
-    }
-    .btn {
-      display: block;
-      text-align: center;
-    }
-  }
-  .success, .failure {
-    background: $gray;
-    color: #fff;
-    padding: 8px 5px;
-    border-radius: 5px;
-    text-align: center;
-    margin-top: 15px;
-  }
-  .success {
-    background: $green;
-  }
-  .failure {
-    background: $red;
-  }
-}
 
-@media (min-width: 800px) {
-  .login-page {
-    .wrapper {
-      // display: flex;
-      // flex-direction: row;
-      // section {
-      //   flex: 50%;
-      // }
-    }
-    .features {
-      // height: 500px;
-    }
-    .login {
-      display: flex;
-    }
-    .login-box, .registration-box {
-      align-self: center;
-    }
-  }
 }
+*/
+
+// @media (min-width: 800px) {
+//   .login-page {
+//     .wrapper {
+//       display: flex;
+//       flex-direction: row;
+//       section {
+//         flex: 50%;
+//       }
+//     }
+//     .features {
+//       height: 500px;
+//     }
+//     .login {
+//       display: flex;
+//     }
+//     .login-box, .registration-box {
+//       align-self: center;
+//     }
+//   }
+// }
 
 /*------------------
   Register

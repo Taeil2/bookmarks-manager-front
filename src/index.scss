@@ -21,6 +21,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-size: cover;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -66,7 +67,6 @@ button, .btn {
   box-shadow: none;
 
   &.secondary {
-    background: none;
     color: $purple;
   }
   &.small {
@@ -242,4 +242,26 @@ input:checked + .slider:before {
 ------------------*/
 .hidden {
   display: none;
+}
+
+
+/*------------------
+  Light Theme Changes
+-------------------*/
+.wrapper {
+  color: #fff;
+}
+button.secondary, .btn.secondary {
+  background: rgba(255, 255, 255, 0.75);
+}
+.bookmarks .bookmark p {
+  color: #fff;
+}
+.btn-group-line button, .btn-group-line .btn {
+  color: #fff;
+  // background: rgba(255, 255, 255, 0.75);
+}
+.btn-group-line button.active, .btn-group-line .btn.active {
+  // color: $light-purple;
+  // border-bottom-color: $light-purple;
 }

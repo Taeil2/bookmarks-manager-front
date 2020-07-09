@@ -29,7 +29,7 @@ export default class Sidebar extends React.Component {
     return (
       <section className={'sidebar-container show-' + this.context.sidebarShown}>
         <SidebarButtons />
-        <div className="sidebar">
+        <div className={`sidebar ${this.context.sidebarComponent}`}>
           {sidebarComponent}
         </div>
       </section>

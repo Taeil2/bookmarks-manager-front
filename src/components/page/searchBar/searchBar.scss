@@ -7,9 +7,8 @@
     width: 100%;
     margin: 0 auto;
     font-size: 18px;
-    padding: 10px 10px;
-    border-radius: 7px;
-    border-color: $gray;
+    padding: 10px 13px;
+    border-color: $light-gray;
   }
   button {
     position: absolute;
@@ -19,7 +18,7 @@
     border: none;
     border-radius: 0;
     color: $gray;
-    padding: 13px 13px;
+    padding: 13px 15px;
   }
   @media (min-width: 600px) {
     button {
@@ -34,4 +33,14 @@
       right: 96px;
     }
   }
+}
+
+.rounded .google-search {
+  border-radius: 10px;
+}
+.square .google-search {
+  border-radius: none;
+}
+.circle .google-search {
+  border-radius: 25px;
 }

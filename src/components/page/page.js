@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import './page.scss';
 import AppContext from '../../appContext';
 
+// import sightengine from 'sightengine'("{api_user}", "{api_secret}");
+
 import SearchBar from './searchBar/searchBar';
 import PageNavigation from './pageNavigation/pageNavigation';
 import Bookmarks from '../bookmarks/bookmarks';
@@ -46,6 +48,10 @@ export default class Page extends React.Component {
       editObject: null,
       moveObject: null
     };
+
+    this.photographer = '';
+    this.photographerLink = '';
+    this.backgroundUrl = '';
   }
 
   // functions for the context
@@ -149,9 +155,30 @@ export default class Page extends React.Component {
     this.setState({hidden: !this.state.hidden});
   }
 
+  getBackgroundImage = () => {
+    console.log('getting')
+    fetch('https://api.unsplash.com/photos/random/?featured=true&orientation=landscape&client_id=CukhwVBuro-F3PuSK0t1q4IXLZCpDhtHc5uQVPRpFr4')
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        document.body.style.backgroundImage = `url('${json.urls.regular}')`;
+        this.photographer = json.user.name;
+        this.photographerUrl = json.user.links.html;
+        this.backgroundImage = json.links.html;
+        // this.checkImageProperties(json.urls.regular);
+      });
+  }
+
+  checkImageProperties = (url) => {
+    fetch(`https://api.sightengine.com/1.0/properties.json?api_user={1721093431}&api_secret={jVhfhwWGc5PkswXL33vd}&url=${url}`)
+      .then(response => response.json())
+      .then(json => console.log(json));
+  }
+
   /* ---- Lifecycle Methods ---- */
   componentDidMount() {
     this.loadUserData();
+    this.getBackgroundImage();
   }
 
   componentDidUpdate() {
@@ -199,6 +226,13 @@ export default class Page extends React.Component {
       <AppContext.Provider value={contextValue}>
         <main className="page">
           <Link to='/' onClick={this.handleLogoutClick} className="logout-link" title="Logout"><i className="fas fa-sign-out-alt"></i> Log out</Link>
+          <div class="unsplash-attribution">
+            Photo&nbsp;
+            {this.photographer !== '' &&
+              <>by <a href={this.photographerLink}  rel="noopener noreferrer">{this.photographer}</a><br /></>
+            }
+            on <a href={this.backgroundUrl} target="_blank" rel="noopener noreferrer">Unsplash</a>
+          </div>
           <div className="wrapper">
             <SearchBar />
             <div className="page-buttons">

@@ -24,8 +24,8 @@ export default function Login() {
         </div>
         <div>
           <h2>Organize bookmarks in pages and folders</h2>
-          <img src={screenshotImg} alt="screenshot" className="screenshot"></img>
-          <img src={mobileScreenshotImg} alt="screenshot" className="mobile-screenshot"></img>
+          {/* <img src={screenshotImg} alt="screenshot" className="screenshot"></img>
+          <img src={mobileScreenshotImg} alt="screenshot" className="mobile-screenshot"></img> */}
         </div>
         <div>
           <h2>Store additional bookmarks in a drawer</h2>

@@ -149,6 +149,8 @@ export default class LoginPage extends React.Component {
   }
 
   render() {
+    document.body.style.backgroundImage = `url('')`; // if logging out, remove the background image
+
     let loginRegisterComponent;
     switch(this.state.loginRegisterComponent) {
       case 'Login':
