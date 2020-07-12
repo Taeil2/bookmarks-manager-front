@@ -4,8 +4,9 @@ import React from 'react';
 export default class Login extends React.Component {
   render() {
     return (
+      <>
       <div className="login-box">
-        <h4>Login</h4>
+        <h3>Login</h3>
         <form onSubmit={(e) => this.props.handleLogin(e)}>
           <label htmlFor="email">Email</label>
           <input type="text" id="email" value={this.props.vars.email} onChange={e => this.props.handleChange(e.target.value, 'email')} />
@@ -21,7 +22,11 @@ export default class Login extends React.Component {
           }
         </form>
         <p>Need an account? <a href="/" onClick={(e) => this.props.updateComponent(e, 'Register')}>Register</a></p>
+
+
       </div>
+      <a href="/demo" className="btn demoButton">Try a demo</a>
+      </>
     );
   }
 }

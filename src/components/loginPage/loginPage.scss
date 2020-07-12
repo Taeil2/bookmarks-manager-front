@@ -5,20 +5,29 @@
 ------------------*/
 
 // Layout
-.login-page, .login-page .wrapper {
-  min-height: 100vh;
-}
-
 .login-page {
+  padding-bottom: 50px;
+  min-height: 100vh;
   .wrapper {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
+  }
+  .login {
+    padding-right: 15px;
+  }
+  .demoButton {
+    width: 340px;
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 30px;
+    display: block;
   }
 }
-
 @media (min-width: 600px) {
   .login-page {
-
+    background: $lightest-gray;
   }
 }
 
@@ -29,29 +38,91 @@
     }
     .features {
       width: calc(100% - 400px);
+      flex-grow: 1;
+      padding-right: 50px;
+      // display: flex;
+      // align-items: center;
     }
     .login {
-
       display: flex;
       align-items: center;
+      justify-content: center;
+      flex-grow: 1;
+      flex-direction: column;
     }
     .features, .login {
-
     }
   }
 }
 
 // Slider
+.slider-container {
+  padding-bottom: 40px;
+  margin-bottom: 40px;
+  background: $lighter-gray;
+  margin-left: -15px;
+  margin-right: -15px;
+  padding-top: 15px;
+  .screenshot {
+    display: none;
+  }
+  .mobile-screenshot {
+    max-width: 80%;
+    margin: 0 auto;
+  }
+  h2 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 0 20px;
+  }
+  .slick-prev, .slick-next {
+    top: unset;
+    bottom: -11px;
+    &:before {
+      color: $lighter-gray;
+      font-size: 24px;
+    }
+  }
+  .slick-prev {
+    left: 20px;
+  }
+  .slick-next {
+    right: 20px;
+  }
+}
 
-
-
-
+@media (min-width: 600px) {
+  .slider-container {
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: 0;
+    border: 1px solid $light-gray;
+    background: #fff;
+    box-shadow: $box-shadow;
+    .screenshot {
+      display: block;
+      max-width: 100%;
+    }
+    .mobile-screenshot {
+      display: none;
+    }
+  }
+}
+@media (min-width: 800px) {
+  .slider-container {
+    margin-top: 50%;
+    transform: translateY(-50%);
+  }
+}
 
 // Login Box
 .login-box, .registration-box {
   width: 340px;
+  max-width: 100%;
   margin: 0 auto;
-  border: 1px solid $dark-gray;
+  border: 1px solid $light-gray;
+  background: #fff;
   padding: 20px;
   label, input {
     display: block;
@@ -65,9 +136,11 @@
     margin-top: -10px;
     margin-bottom: 1em;
   }
-  .btn {
+  button, .btn {
     display: block;
     text-align: center;
+    width: 100%;
+    margin-top: 20px;
   }
   .success, .failure {
     background: $gray;
@@ -84,52 +157,6 @@
     background: $red;
   }
 }
-
-
-/*
-.login-page {
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-  }
-  .features {
-    background: #ddd;
-    height: 150px;
-    max-width: 300px;
-    padding: 20px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    h2 {
-      align-self: flex-end;
-      max-width: 350px;
-      text-align: center;
-    }
-  }
-
-}
-*/
-
-// @media (min-width: 800px) {
-//   .login-page {
-//     .wrapper {
-//       display: flex;
-//       flex-direction: row;
-//       section {
-//         flex: 50%;
-//       }
-//     }
-//     .features {
-//       height: 500px;
-//     }
-//     .login {
-//       display: flex;
-//     }
-//     .login-box, .registration-box {
-//       align-self: center;
-//     }
-//   }
-// }
 
 /*------------------
   Register
@@ -156,5 +183,11 @@
         color: $green;
       }
     }
+  }
+}
+
+@media (min-width: 800px) {
+  .login-box, .registration-box {
+    margin-top: -50%;
   }
 }
