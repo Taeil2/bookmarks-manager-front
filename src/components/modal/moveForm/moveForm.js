@@ -80,7 +80,7 @@ export default class MoveForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={(e) => this.handleSubmit(e)}>
+      <form onSubmit={(e) => this.handleSubmit(e)} autocomplete="off">
         <h3>Move to</h3>
         <div>
           <label className="radio-select">

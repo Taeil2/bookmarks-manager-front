@@ -153,7 +153,7 @@ export default class AddForm extends React.Component {
     }
 
     return (
-      <form onSubmit={(e) => this.handleSubmit(e)}>
+      <form onSubmit={(e) => this.handleSubmit(e)} autocomplete="off">
         {headerHtml}
         <div>
           <label htmlFor="name">Name</label>

@@ -108,7 +108,7 @@ export default class EditForm extends React.Component {
     }
 
     return (
-      <form onSubmit={(e) => this.handleSubmit(e)}>
+      <form onSubmit={(e) => this.handleSubmit(e)} autocomplete="off">
         <h3>{formTitle}</h3>
         <div>
           <label htmlFor="name">Name</label>

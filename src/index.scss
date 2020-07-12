@@ -130,7 +130,7 @@ input {
   padding: 5px 8px;
   margin-bottom: 1em;
   border: 1px solid $gray;
-  border-radius: 7px;
+  border-radius: 5px;
 }
 /* The switch - the box around the slider */
 .switch {
@@ -251,30 +251,46 @@ input:checked + .slider:before {
 /*------------------
   Light Theme Changes
 -------------------*/
-.wrapper {
-  color: #fff;
+.page {
+  .wrapper {
+    color: #fff;
+  }
+  button.secondary, .btn.secondary {
+    background: rgba(255, 255, 255, 0.75);
+  }
+  .bookmarks .bookmark p {
+    color: #fff;
+  }
+  .btn-group-line button, .btn-group-line .btn {
+    color: #fff;
+  }
+  .btn-group-line button.active, .btn-group-line .btn.active {
+    color: #fff;
+    border-bottom-color: #fff;
+  }
+  .react-contextmenu-item {
+    color: $dark-gray;
+  }
+  .modal .btn-group-line button, .modal .btn-group-line .btn {
+    color: $dark-gray;
+  }
+  .modal .btn-group-line button.active, .modal .btn-group-line .btn.active {
+    color: $purple;
+    border-bottom-color: $purple;
+  }
 }
-button.secondary, .btn.secondary {
-  background: rgba(255, 255, 255, 0.75);
+.modal {
+  button.secondary, .btn.secondary {
+    background: rgba(255, 255, 255, 0.75);
+  }
+  .btn-group-line button, .btn-group-line .btn {
+    color: $dark-gray;
+  }
+  .btn-group-line button.active, .btn-group-line .btn.active {
+    color: $purple;
+    border-bottom-color: $purple;
+  }
 }
-.bookmarks .bookmark p {
-  color: #fff;
-}
-.btn-group-line button, .btn-group-line .btn {
-  color: #fff;
-  // background: rgba(255, 255, 255, 0.75);
-}
-.btn-group-line button.active, .btn-group-line .btn.active {
-  color: #fff;
-  border-bottom-color: #fff;
-}
-.react-contextmenu-item {
+.sidebar .bookmarks .bookmark p {
   color: $dark-gray;
-}
-.modal .btn-group-line button, .btn-group-line .btn {
-  color: $dark-gray;
-}
-.modal .btn-group-line button.active, .modal .btn-group-line .btn.active {
-  color: $purple;
-  border-bottom-color: $purple;
 }
