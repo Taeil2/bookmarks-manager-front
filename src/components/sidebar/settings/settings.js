@@ -6,6 +6,13 @@ import UserApiService from '../../../services/users-api-service';
 export default class Settings extends React.Component {
   static contextType = AppContext;
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      unsplash_url: '',
+    }
+  }
+
   handleSettingChange = (setting, value) => {
     if (value === 'switch') {
       UserApiService.updateUser({[setting]: !this.context.settings[setting]})
@@ -14,6 +21,24 @@ export default class Settings extends React.Component {
       UserApiService.updateUser({[setting]: value});
       this.context.changeSettings({[setting]: value});
     }
+    if (setting === 'random_background' || setting === 'unsplash_url') {
+      setTimeout(() => {
+        this.context.getBackgroundImage();
+      }, 250)
+    }
+  }
+
+  handleUnsplashChange = (value) => {
+    if (value !== '') {
+      this.setState({unsplash_url: value});
+      this.handleSettingChange('unsplash_url', value);
+    }
+  }
+
+  componentDidMount() {
+    this.setState({
+      unsplash_url: this.context.settings.unsplash_url
+    });
   }
 
   render() {
@@ -35,6 +60,7 @@ export default class Settings extends React.Component {
     // let icon_alignment_right;
     // let enable_groups = false;
     let enable_hiding = false;
+    let random_background = false;
 
     if (this.context.settings.enable_pages === true) {
       enable_pages = true;
@@ -90,6 +116,12 @@ export default class Settings extends React.Component {
     if (this.context.settings.enable_hiding === true) {
       enable_hiding = true;
     }
+    if (this.context.settings.enable_hiding === true) {
+      enable_hiding = true;
+    }
+    if (this.context.settings.random_background === true) {
+      random_background = true;
+    }
 
     return (
       <>
@@ -132,8 +164,8 @@ export default class Settings extends React.Component {
               <label>Size</label>
               <div>
                 <div className="btn-group">
-                  <button onClick={() => this.handleSettingChange('icon_size', 'small')} className={icon_size_small} >small</button>
-                  <button onClick={() => this.handleSettingChange('icon_size', 'medium')}  className={icon_size_medium} >medium</button>
+                  <button onClick={() => this.handleSettingChange('icon_size', 'small')} className={icon_size_small}>small</button>
+                  <button onClick={() => this.handleSettingChange('icon_size', 'medium')}  className={icon_size_medium}>medium</button>
                   <button onClick={() => this.handleSettingChange('icon_size', 'large')} className={icon_size_large}>large</button>
                 </div>
               </div>
@@ -142,8 +174,8 @@ export default class Settings extends React.Component {
               <label>Shape</label>
               <div>
                 <div className="btn-group">
-                  <button onClick={() => this.handleSettingChange('icon_shape', 'square')} className={icon_shape_square} >square</button>
-                  <button onClick={() => this.handleSettingChange('icon_shape', 'rounded')} className={icon_shape_rounded} >rounded</button>
+                  <button onClick={() => this.handleSettingChange('icon_shape', 'square')} className={icon_shape_square}>square</button>
+                  <button onClick={() => this.handleSettingChange('icon_shape', 'rounded')} className={icon_shape_rounded}>rounded</button>
                   <button onClick={() => this.handleSettingChange('icon_shape', 'circle')} className={icon_shape_circle} >circle</button>
                 </div>
               </div>
@@ -159,6 +191,19 @@ export default class Settings extends React.Component {
                   <button onClick={() => this.handleSettingChange('icons_per_row', 8)} className={icons_per_row_8}>8</button>
                 </div>
               </div>
+            </div>
+            <h4>Background</h4>
+            <div className="setting">
+              <label>Unsplash Image URL</label>
+              <small className="light">Use any image from <a href="https://unsplash.com/" target="_blank" rel="noopener noreferrer">Unsplash.com</a></small>
+              <input type="text" placeholder="https://unsplash.com/photos/phIFdC6lA4E" value={this.context.settings.unsplash_url} onChange={e => this.handleUnsplashChange(e.target.value)} disabled={random_background}></input>
+            </div>
+            <div className="setting">
+              <label>Use Random Background Image</label>
+              <label className="switch">
+                <input type="checkbox" checked={random_background} onChange={() => this.handleSettingChange('random_background', 'switch') } />
+                <span className="slider round"></span>
+              </label>
             </div>
             {/* <div className="setting">
               <label>Alignment</label>

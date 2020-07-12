@@ -1,5 +1,9 @@
 @import '../../../variables.scss';
 
+.Drawer {
+  // background: url('../../../img/drawer/vintage_speckles.png');
+}
+
 .sidebar .drawer-add {
   font-size: 14px;
   margin-left: 20px;
@@ -7,6 +11,7 @@
   padding: 6px 12px;
   border-radius: 8px;
   color: $gray;
+  background: #fff;
   i {
     font-size: 12px;
     vertical-align: top;

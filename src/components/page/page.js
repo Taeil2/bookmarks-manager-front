@@ -39,7 +39,9 @@ export default class Page extends React.Component {
         icon_size: 'medium',
         icon_shape: 'rounded',
         icons_per_row: 5,
-        icon_alignment: 'left'
+        icon_alignment: 'left',
+        random_background: false,
+        unsplash_url: 'https://unsplash.com/photos/phIFdC6lA4E',
       },
       pageLoaded: false,
       initialNote: null,
@@ -108,6 +110,7 @@ export default class Page extends React.Component {
   loadUserData = () => {
     UsersService.getUserById()
       .then((result) => {
+        // console.log(result);
         this.setState({
           settings: {
             enable_pages: result.enable_pages,
@@ -117,10 +120,13 @@ export default class Page extends React.Component {
             icons_per_row: result.icons_per_row,
             icon_alignment: result.icon_alignment,
             enable_groups: result.enable_groups,
-            enable_hiding: result.enable_hiding
+            enable_hiding: result.enable_hiding,
+            random_background: result.random_background,
+            unsplash_url: result.unsplash_url
           },
           initialNote: result.note,
-        })
+        });
+        this.getBackgroundImage();
       });
 
     PagesApiService.getPages()
@@ -135,7 +141,6 @@ export default class Page extends React.Component {
   getBookmarks = () => {
     BookmarksApiService.getBookmarksByPage(this.state.activePage)
       .then(result => {
-
         this.setState({
           pageBookmarks: result,
           pageLoaded: true
@@ -156,31 +161,50 @@ export default class Page extends React.Component {
   }
 
   getBackgroundImage = () => {
-    // specific photo
-    // fetch('https://api.unsplash.com/photos/Gf_KqXHU-PY/?client_id=CukhwVBuro-F3PuSK0t1q4IXLZCpDhtHc5uQVPRpFr4')
-    //   .then(response => response.json())
-    //   .then(json => {
-    //     console.log(json);
-    //     document.body.style.backgroundImage = `url('${json.urls.regular}')`;
-    //     this.photographer = json.user.name;
-    //     this.photographerUrl = json.user.links.html;
-    //     this.backgroundImage = json.links.html;
+    let unsplashApiUrl = '';
+    if (this.state.settings.random_background) {
+      unsplashApiUrl = 'https://api.unsplash.com/photos/random/?featured=true&orientation=landscape&client_id=CukhwVBuro-F3PuSK0t1q4IXLZCpDhtHc5uQVPRpFr4';
+    } else {
+      console.log('unsplash image', this.state.settings.unsplash_url)
+      let parts = this.state.settings.unsplash_url.split('/');
+      let photosFound = false;
+      let photoId;
+      // the part of the URL that matches the photo ID comes after "photos"
+      parts.forEach(part => {
+        if (part === 'photos') {
+          photosFound = true;
+        }
+        if (photosFound) {
+          photoId = part;
+        }
+      });
 
-    //     console.log(this.photographerUrl, this.backgroundImage);
-    //     // this.checkImageProperties(json.urls.regular);
-    //   });
-
-    // random photo
-    fetch('https://api.unsplash.com/photos/random/?featured=true&orientation=landscape&client_id=CukhwVBuro-F3PuSK0t1q4IXLZCpDhtHc5uQVPRpFr4')
+      // Gf_KqXHU-PY
+      unsplashApiUrl = `https://api.unsplash.com/photos/${photoId}/?client_id=CukhwVBuro-F3PuSK0t1q4IXLZCpDhtHc5uQVPRpFr4`;
+    }
+    fetch(unsplashApiUrl)
       .then(response => response.json())
       .then(json => {
-        console.log(json);
-        document.body.style.backgroundImage = `url('${json.urls.regular}')`;
-        this.photographer = json.user.name;
-        this.photographerUrl = json.user.links.html;
-        this.backgroundImage = json.links.html;
-        // this.checkImageProperties(json.urls.regular);
+        if (!json.id) {
+          this.useFallbackImage();
+        } else {
+          document.body.style.backgroundImage = `url('${json.urls.regular}')`;
+          this.photographer = json.user.name;
+          this.photographerUrl = json.user.links.html;
+          this.backgroundImage = json.links.html;
+        }
       });
+  }
+
+  useFallbackImage = () => {
+    fetch('https://api.unsplash.com/photos/phIFdC6lA4E/?client_id=CukhwVBuro-F3PuSK0t1q4IXLZCpDhtHc5uQVPRpFr4')
+        .then(response => response.json())
+        .then(json => {
+          document.body.style.backgroundImage = `url('${json.urls.regular}')`;
+          this.photographer = json.user.name;
+          this.photographerUrl = json.user.links.html;
+          this.backgroundImage = json.links.html;
+        });
   }
 
   checkImageProperties = (url) => {
@@ -192,7 +216,6 @@ export default class Page extends React.Component {
   /* ---- Lifecycle Methods ---- */
   componentDidMount() {
     this.loadUserData();
-    this.getBackgroundImage();
   }
 
   componentDidUpdate() {
@@ -216,6 +239,7 @@ export default class Page extends React.Component {
     contextValue.changeContext = this.changeContext;
     contextValue.changeSettings = this.changeSettings;
     contextValue.loadUserData = this.loadUserData;
+    contextValue.getBackgroundImage = this.getBackgroundImage;
 
     // console.log('context:', this.state);
 

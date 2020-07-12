@@ -31,6 +31,7 @@
     height: 50px;
     font-size: 20px;
     color: $light-gray;
+    background: $lightest-gray;
   }
   button + button {
     margin-left: -1px;
@@ -38,6 +39,9 @@
   button:last-of-type {
     border-right: 0;
   }
+}
+.sidebar-container.show-true .buttons-container .active, .bookmarks-btn.active {
+  color: $purple;
 }
 
 @media (min-width: 600px) {
@@ -71,7 +75,7 @@
   width: 100%;
   height: calc(100vh - 50px);
   padding: 20px 15px;
-  background: #fff;
+  background: $lightest-gray;;
   overflow-y: auto;
   z-index: 1;
   h2 {
