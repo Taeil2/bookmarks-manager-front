@@ -9,7 +9,8 @@
   &.show-false .sidebar {
     // visibility: hidden;
     position: absolute;
-    left: 100vw;
+    display: none;
+    // left: 100vw;
   }
   &.show-true .sidebar {
     // visibility: visible;
@@ -118,6 +119,7 @@ $sidebarWidth: 375px;
     &.show-false .sidebar {
       position: relative;
       left: unset;
+      display: block;
     }
     &.show-true .sidebar {
     }
