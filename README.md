@@ -20,8 +20,11 @@ SASS
 [ShowdownJs](http://showdownjs.com/)<br/>
 [React Context Menu](https://github.com/vkbansal/react-contextmenu)
 
-### Screenshot
-https://bookmarks-manager-front.vercel.app/static/media/screenshot.73073303.png
+### Screenshots
+![Welcome Screen](/src/screenshots/screenshot1.png)
+![Filled Home Screen](/src/screenshots/screenshot2.png)
+![Drawer](/src/screenshots/screenshot3.png)
+![Notes](/src/screenshots/screenshot4.png)
 
 ### Future Features
 - Redesigned home sceen
