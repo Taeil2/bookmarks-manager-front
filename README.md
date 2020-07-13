@@ -21,8 +21,8 @@ SASS
 [React Context Menu](https://github.com/vkbansal/react-contextmenu)
 
 ### Screenshots
-![Welcome Screen](/src/screenshots/screenshot1.png)
-![Filled Home Screen](/src/screenshots/screenshot2.png)
+![Welcome Screen](https://github.com/Taeil2/bookmarks-manager-front/blob/master/src/img/screenshots/screenshot1.png)
+![Filled Home Screen](/src/img/screenshots/screenshot2.png)
 ![Drawer](/src/screenshots/screenshot3.png)
 ![Notes](/src/screenshots/screenshot4.png)
 
