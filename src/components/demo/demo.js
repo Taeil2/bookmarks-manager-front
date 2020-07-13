@@ -7,7 +7,7 @@ export default class Demo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: null,
+      // error: null,
       loginFailure: false,
     }
   }
@@ -22,9 +22,11 @@ export default class Demo extends React.Component {
       window.location.reload(false);
     })
     .catch(res => {
-      this.setState({
-        error: res.error
-      })
+      console.log(res);
+      alert('Login failed: ', res.error)
+      // this.setState({
+      //   error: res.error
+      // })
     })
   }
 
@@ -33,9 +35,6 @@ export default class Demo extends React.Component {
 
     return (
       <>
-        {this.state.error !== null &&
-          <p>Login failed: {this.state.error}</p>
-        }
       </>
     );
   }
