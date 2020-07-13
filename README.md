@@ -21,10 +21,10 @@ SASS
 [React Context Menu](https://github.com/vkbansal/react-contextmenu)
 
 ### Screenshots
-![Welcome Screen](https://github.com/Taeil2/bookmarks-manager-front/blob/master/src/img/screenshots/screenshot1.png)
+![Welcome Screen](/src/img/screenshots/screenshot1.png)
 ![Filled Home Screen](/src/img/screenshots/screenshot2.png)
-![Drawer](/src/screenshots/screenshot3.png)
-![Notes](/src/screenshots/screenshot4.png)
+![Drawer](/src/img/screenshots/screenshot3.png)
+![Notes](/src/img/screenshots/screenshot4.png)
 
 ### Future Features
 - Redesigned home sceen
